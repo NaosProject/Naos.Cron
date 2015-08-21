@@ -152,6 +152,7 @@ namespace Naos.Cron
     /// </summary>
     public class NullSchedule : ScheduleBase
     {
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             /* no-op - always valid */
@@ -163,6 +164,7 @@ namespace Naos.Cron
     /// </summary>
     public class MinutelySchedule : ScheduleBase
     {
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             /* no-op - always valid */
@@ -179,6 +181,7 @@ namespace Naos.Cron
         /// </summary>
         public int Minute { get; set; }
 
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             if (this.Minute < 0)
@@ -208,6 +211,7 @@ namespace Naos.Cron
         /// </summary>
         public int Minute { get; set; }
 
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             if (this.Minute < 0)
@@ -252,6 +256,7 @@ namespace Naos.Cron
         /// </summary>
         public int Minute { get; set; }
 
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             if (this.Minute < 0)
@@ -303,6 +308,7 @@ namespace Naos.Cron
         /// </summary>
         public int Minute { get; set; }
 
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             if (this.Minute < 0)
@@ -376,6 +382,7 @@ namespace Naos.Cron
         /// </summary>
         public int Minute { get; set; }
 
+        /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
             if (this.Minute < 0)
