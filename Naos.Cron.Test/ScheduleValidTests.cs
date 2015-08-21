@@ -13,6 +13,22 @@ namespace Naos.Cron.Test
     public class ScheduleValidTests
     {
         [Fact]
+        public void IsValid_Valid_True()
+        {
+            var o = new NullSchedule();
+            Assert.NotNull(o);
+            Assert.True(o.IsValid());
+        }
+
+        [Fact]
+        public void IsValid_Invalid_False()
+        {
+            var o = new HourlySchedule { Minute = 100 };
+            Assert.NotNull(o);
+            Assert.False(o.IsValid());
+        }
+
+        [Fact]
         public void NullSchedule_Valid()
         {
             var o = new NullSchedule();
