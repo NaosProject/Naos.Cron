@@ -82,10 +82,10 @@ namespace Naos.Cron
     public abstract class ScheduleBase
     {
         /// <summary>
-        /// Converts a schedule into a cron string.
+        /// Converts a schedule into a cron expression.
         /// </summary>
-        /// <returns>A cron string of the schedule.</returns>
-        public string ToCronString()
+        /// <returns>A cron expression of the schedule.</returns>
+        public string ToCronExpression()
         {
             var schedule = this;
             var scheduleType = schedule.GetType();
