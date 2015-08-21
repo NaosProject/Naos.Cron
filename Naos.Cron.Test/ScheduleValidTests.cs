@@ -62,8 +62,8 @@ namespace Naos.Cron.Test
         [Fact]
         public void HourlySchedule_MinuteSixtyOne_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new HourlySchedule { Minute = 61 }.ThrowIfInvalid());
-            Assert.Equal("The minute of the hour cannot be more than 60.  It was 61", ex.Message);
+            var ex = Assert.Throws<ArgumentException>(() => new HourlySchedule { Minute = 60 }.ThrowIfInvalid());
+            Assert.Equal("The minute of the hour cannot be more than 59.  It was 60", ex.Message);
         }
 
         [Fact]
@@ -98,8 +98,8 @@ namespace Naos.Cron.Test
         [Fact]
         public void DailySchedule_MinuteSixtyOne_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new DailyScheduleInUtc { Minute = 61 }.ThrowIfInvalid());
-            Assert.Equal("The minute of the hour cannot be more than 60.  It was 61", ex.Message);
+            var ex = Assert.Throws<ArgumentException>(() => new DailyScheduleInUtc { Minute = 60 }.ThrowIfInvalid());
+            Assert.Equal("The minute of the hour cannot be more than 59.  It was 60", ex.Message);
         }
 
         [Fact]
@@ -134,8 +134,8 @@ namespace Naos.Cron.Test
         [Fact]
         public void WeeklySchedule_MinuteSixtyOne_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new WeeklyScheduleInUtc { Minute = 61 }.ThrowIfInvalid());
-            Assert.Equal("The minute of the hour cannot be more than 60.  It was 61", ex.Message);
+            var ex = Assert.Throws<ArgumentException>(() => new WeeklyScheduleInUtc { Minute = 60 }.ThrowIfInvalid());
+            Assert.Equal("The minute of the hour cannot be more than 59.  It was 60", ex.Message);
         }
 
         [Fact]
@@ -184,8 +184,8 @@ namespace Naos.Cron.Test
         [Fact]
         public void MonthlySchedule_MinuteSixtyOne_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new MonthlyScheduleInUtc { Minute = 61 }.ThrowIfInvalid());
-            Assert.Equal("The minute of the hour cannot be more than 60.  It was 61", ex.Message);
+            var ex = Assert.Throws<ArgumentException>(() => new MonthlyScheduleInUtc { Minute = 60 }.ThrowIfInvalid());
+            Assert.Equal("The minute of the hour cannot be more than 59.  It was 60", ex.Message);
         }
 
         [Fact]
@@ -234,8 +234,8 @@ namespace Naos.Cron.Test
         [Fact]
         public void YearlySchedule_MinuteSixtyOne_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new YearlyScheduleInUtc { Minute = 61 }.ThrowIfInvalid());
-            Assert.Equal("The minute of the hour cannot be more than 60.  It was 61", ex.Message);
+            var ex = Assert.Throws<ArgumentException>(() => new YearlyScheduleInUtc { Minute = 60 }.ThrowIfInvalid());
+            Assert.Equal("The minute of the hour cannot be more than 59.  It was 60", ex.Message);
         }
     }
 }

@@ -189,9 +189,9 @@ namespace Naos.Cron
                 throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
             }
 
-            if (this.Minute > 60)
+            if (this.Minute > 59)
             {
-                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+                throw new ArgumentException("The minute of the hour cannot be more than 59.  It was " + this.Minute);
             }
         }
     }
@@ -219,9 +219,9 @@ namespace Naos.Cron
                 throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
             }
 
-            if (this.Minute > 60)
+            if (this.Minute > 59)
             {
-                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+                throw new ArgumentException("The minute of the hour cannot be more than 59.  It was " + this.Minute);
             }
 
             if (this.Hour < 0)
@@ -264,9 +264,9 @@ namespace Naos.Cron
                 throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
             }
 
-            if (this.Minute > 60)
+            if (this.Minute > 59)
             {
-                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+                throw new ArgumentException("The minute of the hour cannot be more than 59.  It was " + this.Minute);
             }
 
             if (this.Hour < 0)
@@ -316,9 +316,9 @@ namespace Naos.Cron
                 throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
             }
 
-            if (this.Minute > 60)
+            if (this.Minute > 59)
             {
-                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+                throw new ArgumentException("The minute of the hour cannot be more than 59.  It was " + this.Minute);
             }
 
             if (this.Hour < 0)
@@ -390,9 +390,9 @@ namespace Naos.Cron
                 throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
             }
 
-            if (this.Minute > 60)
+            if (this.Minute > 59)
             {
-                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+                throw new ArgumentException("The minute of the hour cannot be more than 59.  It was " + this.Minute);
             }
 
             if (this.Hour < 0)
