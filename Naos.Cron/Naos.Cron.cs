@@ -81,6 +81,46 @@ namespace Naos.Cron
     [Bindable(BindableSupport.Default)]
     public abstract class ScheduleBase
     {
+        /// <summary>
+        /// Converts a schedule into a cron string.
+        /// </summary>
+        /// <returns>A cron string of the schedule.</returns>
+        public string ToCronString()
+        {
+            var schedule = this;
+            var scheduleType = schedule.GetType();
+            if (scheduleType == typeof(MinutelySchedule))
+            {
+                return "* * * * *";
+            }
+            else if (scheduleType == typeof(HourlySchedule))
+            {
+                var hourlySchedule = (HourlySchedule)schedule;
+                return string.Format("{0} * * * *", hourlySchedule.Minute);
+            }
+            else if (scheduleType == typeof(DailyScheduleInUtc))
+            {
+                var dailySchedule = (DailyScheduleInUtc)schedule;
+                return string.Format("{0} {1} * * *", dailySchedule.Minute, dailySchedule.Hour);
+            }
+            else if (scheduleType == typeof(WeeklyScheduleInUtc))
+            {
+                var weeklySchedule = (WeeklyScheduleInUtc)schedule;
+                return string.Format("{0} {1} * * {2}", weeklySchedule.Minute, weeklySchedule.Hour, (int)weeklySchedule.DayOfWeek);
+            }
+            else if (scheduleType == typeof(MonthlyScheduleInUtc))
+            {
+                var monthlySchedule = (MonthlyScheduleInUtc)schedule;
+                return string.Format("{0} {1} {2} * *", monthlySchedule.Minute, monthlySchedule.Hour, monthlySchedule.DayInMonth);
+            }
+            else if (scheduleType == typeof(YearlyScheduleInUtc))
+            {
+                var yearlySchedule = (YearlyScheduleInUtc)schedule;
+                return string.Format("{0} {1} {2} {3} *", yearlySchedule.Minute, yearlySchedule.Hour, yearlySchedule.DayInMonth, (int)yearlySchedule.MonthOfYear);
+            }
+
+            throw new NotSupportedException("Unsupported Schedule: " + scheduleType.AssemblyQualifiedName);
+        }
     }
 
     /// <summary>
@@ -211,52 +251,5 @@ namespace Naos.Cron
         /// Gets or sets the minute of the hour to run.
         /// </summary>
         public int Minute { get; set; }
-    }
-
-    /// <summary>
-    /// Code to convert a schedule into a cron string.
-    /// </summary>
-    public class ScheduleCronConverter
-    {
-        /// <summary>
-        /// Converts a schedule into a cron string.
-        /// </summary>
-        /// <param name="schedule">The schedule to convert.</param>
-        /// <returns>A cron string of the schedule.</returns>
-        public static string GetCronExpressionFromSchedule(ScheduleBase schedule)
-        {
-            var scheduleType = schedule.GetType();
-            if (scheduleType == typeof(MinutelySchedule))
-            {
-                return "* * * * *";
-            }
-            else if (scheduleType == typeof(HourlySchedule))
-            {
-                var hourlySchedule = (HourlySchedule)schedule;
-                return string.Format("{0} * * * *", hourlySchedule.Minute);
-            }
-            else if (scheduleType == typeof(DailyScheduleInUtc))
-            {
-                var dailySchedule = (DailyScheduleInUtc)schedule;
-                return string.Format("{0} {1} * * *", dailySchedule.Minute, dailySchedule.Hour);
-            }
-            else if (scheduleType == typeof(WeeklyScheduleInUtc))
-            {
-                var weeklySchedule = (WeeklyScheduleInUtc)schedule;
-                return string.Format("{0} {1} * * {2}", weeklySchedule.Minute, weeklySchedule.Hour, (int)weeklySchedule.DayOfWeek);
-            }
-            else if (scheduleType == typeof(MonthlyScheduleInUtc))
-            {
-                var monthlySchedule = (MonthlyScheduleInUtc)schedule;
-                return string.Format("{0} {1} {2} * *", monthlySchedule.Minute, monthlySchedule.Hour, monthlySchedule.DayInMonth);
-            }
-            else if (scheduleType == typeof(YearlyScheduleInUtc))
-            {
-                var yearlySchedule = (YearlyScheduleInUtc)schedule;
-                return string.Format("{0} {1} {2} {3} *", yearlySchedule.Minute, yearlySchedule.Hour, yearlySchedule.DayInMonth, (int)yearlySchedule.MonthOfYear);
-            }
-
-            throw new NotSupportedException("Unsupported Schedule: " + scheduleType.AssemblyQualifiedName);
-        }
     }
 }
