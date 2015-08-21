@@ -53,6 +53,7 @@
     <Compile Include="ScheduleCronConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduleDefaultTests.cs" />
+    <Compile Include="ScheduleValidTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

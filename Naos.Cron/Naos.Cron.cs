@@ -82,11 +82,35 @@ namespace Naos.Cron
     public abstract class ScheduleBase
     {
         /// <summary>
+        /// Checks to see if the schedule is valid (i.e. there aren't 61 minutes in an hour).
+        /// </summary>
+        /// <returns>True if valid and false if not.</returns>
+        public bool IsValid()
+        {
+            try
+            {
+                this.ThrowIfInvalid();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks to make sure the construct is valid (i.e. there aren't 61 minutes in an hour).
+        /// </summary>
+        public abstract void ThrowIfInvalid();
+
+        /// <summary>
         /// Converts a schedule into a cron expression.
         /// </summary>
         /// <returns>A cron expression of the schedule.</returns>
         public string ToCronExpression()
         {
+            this.ThrowIfInvalid();
+
             var schedule = this;
             var scheduleType = schedule.GetType();
             if (scheduleType == typeof(MinutelySchedule))
@@ -128,6 +152,10 @@ namespace Naos.Cron
     /// </summary>
     public class NullSchedule : ScheduleBase
     {
+        public override void ThrowIfInvalid()
+        {
+            /* no-op - always valid */
+        }
     }
 
     /// <summary>
@@ -135,6 +163,10 @@ namespace Naos.Cron
     /// </summary>
     public class MinutelySchedule : ScheduleBase
     {
+        public override void ThrowIfInvalid()
+        {
+            /* no-op - always valid */
+        }
     }
 
     /// <summary>
@@ -146,6 +178,19 @@ namespace Naos.Cron
         /// Gets or sets the minute of the hour to run.
         /// </summary>
         public int Minute { get; set; }
+
+        public override void ThrowIfInvalid()
+        {
+            if (this.Minute < 0)
+            {
+                throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
+            }
+
+            if (this.Minute > 60)
+            {
+                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+            }
+        }
     }
 
     /// <summary>
@@ -162,6 +207,29 @@ namespace Naos.Cron
         /// Gets or sets the minute of the hour to run.
         /// </summary>
         public int Minute { get; set; }
+
+        public override void ThrowIfInvalid()
+        {
+            if (this.Minute < 0)
+            {
+                throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
+            }
+
+            if (this.Minute > 60)
+            {
+                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+            }
+
+            if (this.Hour < 0)
+            {
+                throw new ArgumentException("The hour of the day cannot be less than 0.  It was " + this.Hour);
+            }
+
+            if (this.Hour > 23)
+            {
+                throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
+            }
+        }
     }
 
     /// <summary>
@@ -183,6 +251,29 @@ namespace Naos.Cron
         /// Gets or sets the minute of the hour to run.
         /// </summary>
         public int Minute { get; set; }
+
+        public override void ThrowIfInvalid()
+        {
+            if (this.Minute < 0)
+            {
+                throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
+            }
+
+            if (this.Minute > 60)
+            {
+                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+            }
+
+            if (this.Hour < 0)
+            {
+                throw new ArgumentException("The hour of the day cannot be less than 0.  It was " + this.Hour);
+            }
+
+            if (this.Hour > 23)
+            {
+                throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
+            }
+        }
     }
 
     /// <summary>
@@ -211,6 +302,39 @@ namespace Naos.Cron
         /// Gets or sets the minute of the hour to run.
         /// </summary>
         public int Minute { get; set; }
+
+        public override void ThrowIfInvalid()
+        {
+            if (this.Minute < 0)
+            {
+                throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
+            }
+
+            if (this.Minute > 60)
+            {
+                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+            }
+
+            if (this.Hour < 0)
+            {
+                throw new ArgumentException("The hour of the day cannot be less than 0.  It was " + this.Hour);
+            }
+
+            if (this.Hour > 23)
+            {
+                throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
+            }
+
+            if (this.DayInMonth < 1)
+            {
+                throw new ArgumentException("The day in the month cannot be less than 0.  It was " + this.DayInMonth);
+            }
+
+            if (this.DayInMonth > 31)
+            {
+                throw new ArgumentException("The day in the month cannot be more than 31.  It was " + this.DayInMonth);
+            }
+        }
     }
 
     /// <summary>
@@ -251,5 +375,38 @@ namespace Naos.Cron
         /// Gets or sets the minute of the hour to run.
         /// </summary>
         public int Minute { get; set; }
+
+        public override void ThrowIfInvalid()
+        {
+            if (this.Minute < 0)
+            {
+                throw new ArgumentException("The minute of the hour cannot be less than 0.  It was " + this.Minute);
+            }
+
+            if (this.Minute > 60)
+            {
+                throw new ArgumentException("The minute of the hour cannot be more than 60.  It was " + this.Minute);
+            }
+
+            if (this.Hour < 0)
+            {
+                throw new ArgumentException("The hour of the day cannot be less than 0.  It was " + this.Hour);
+            }
+
+            if (this.Hour > 23)
+            {
+                throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
+            }
+
+            if (this.DayInMonth < 1)
+            {
+                throw new ArgumentException("The day in the month cannot be less than 0.  It was " + this.DayInMonth);
+            }
+
+            if (this.DayInMonth > 31)
+            {
+                throw new ArgumentException("The day in the month cannot be more than 31.  It was " + this.DayInMonth);
+            }
+        }
     }
 }
