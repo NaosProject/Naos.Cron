@@ -7,7 +7,10 @@
 namespace Naos.Cron
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// The months in the year.
@@ -76,42 +79,19 @@ namespace Naos.Cron
     }
 
     /// <summary>
-    /// Base class of the schedule for a recurring message sequence.
+    /// Methods to convert cron expressions to appropriate schedules and vice versa.
     /// </summary>
-    [Bindable(BindableSupport.Default)]
-    public abstract class ScheduleBase
+    public static class ScheduleCronExpressionConverter
     {
-        /// <summary>
-        /// Checks to see if the schedule is valid (i.e. there aren't 61 minutes in an hour).
-        /// </summary>
-        /// <returns>True if valid and false if not.</returns>
-        public bool IsValid()
-        {
-            try
-            {
-                this.ThrowIfInvalid();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Checks to make sure the construct is valid (i.e. there aren't 61 minutes in an hour).
-        /// </summary>
-        public abstract void ThrowIfInvalid();
-
         /// <summary>
         /// Converts a schedule into a cron expression.
         /// </summary>
+        /// <param name="schedule">Schedule to convert to a cron expression.</param>
         /// <returns>A cron expression of the schedule.</returns>
-        public string ToCronExpression()
+        public static string ToCronExpression(ScheduleBase schedule)
         {
-            this.ThrowIfInvalid();
+            schedule.ThrowIfInvalid();
 
-            var schedule = this;
             var scheduleType = schedule.GetType();
             if (scheduleType == typeof(MinutelySchedule))
             {
@@ -144,6 +124,182 @@ namespace Naos.Cron
             }
 
             throw new NotSupportedException("Unsupported Schedule: " + scheduleType.AssemblyQualifiedName);
+        }
+
+        /// <summary>
+        /// Creates the appropriate ScheduleBase implementation from the specified cron expression.
+        /// </summary>
+        /// <param name="cronExpression">Cron expression to convert into a class.</param>
+        /// <returns>Correct implementation of ScheduleBase to honor the expression.</returns>
+        public static ScheduleBase FromCronExpression(string cronExpression)
+        {
+            if (string.IsNullOrEmpty(cronExpression))
+            {
+                throw new ArgumentException("Cannot have a null or empty cron expression.", "cronExpression");
+            }
+
+            var trimmedCronExpression = cronExpression.Trim();
+            var cronExpressionItems = trimmedCronExpression.Split(' ');
+            if (cronExpressionItems.Length != 5)
+            {
+                throw new ArgumentException("Incorrect number of values in the cron expression.", "cronExpression");
+            }
+
+            // probably should do this with regex but my regex is so bad...
+            if (cronExpressionItems.All(_ => _ == "*"))
+            {
+                var ret = new MinutelySchedule();
+                return ret;
+            }
+            else if (cronExpressionItems.First().IsNumeric() && cronExpressionItems.Skip(1).All(_ => _ == "*"))
+            {
+                var minuteString = cronExpressionItems.First();
+                var minute = int.Parse(minuteString);
+
+                var ret = new HourlySchedule { Minute = minute };
+                return ret;
+            }
+            else if (cronExpressionItems.First().IsNumeric() && cronExpressionItems.Second().IsNumeric() && cronExpressionItems.Skip(2).All(_ => _ == "*"))
+            {
+                var minuteString = cronExpressionItems.First();
+                var minute = int.Parse(minuteString);
+
+                var hourString = cronExpressionItems.Second();
+                var hour = int.Parse(hourString);
+
+                var ret = new DailyScheduleInUtc { Hour = hour, Minute = minute };
+                return ret;
+            }
+            else if (
+                cronExpressionItems.First().IsNumeric() && 
+                cronExpressionItems.Second().IsNumeric() && 
+                cronExpressionItems.Third() == "*" && 
+                cronExpressionItems.Fourth() == "*" && 
+                cronExpressionItems.Fifth().IsNumeric())
+            {
+                var minuteString = cronExpressionItems.First();
+                var minute = int.Parse(minuteString);
+
+                var hourString = cronExpressionItems.Second();
+                var hour = int.Parse(hourString);
+
+                var dayOfWeekString = cronExpressionItems.Fifth();
+                var dayOfWeekInt = int.Parse(dayOfWeekString);
+                var dayOfWeek = (DayOfWeek)dayOfWeekInt;
+
+                var ret = new WeeklyScheduleInUtc { Hour = hour, Minute = minute, DayOfWeek = dayOfWeek };
+                return ret;
+            }
+            else if (
+                cronExpressionItems.First().IsNumeric() && 
+                cronExpressionItems.Second().IsNumeric() && 
+                cronExpressionItems.Third().IsNumeric() && 
+                cronExpressionItems.Fourth() == "*" && 
+                cronExpressionItems.Fifth() == "*")
+            {
+                var minuteString = cronExpressionItems.First();
+                var minute = int.Parse(minuteString);
+
+                var hourString = cronExpressionItems.Second();
+                var hour = int.Parse(hourString);
+
+                var dayOfMonthString = cronExpressionItems.Third();
+                var dayOfMonthInt = int.Parse(dayOfMonthString);
+
+                var ret = new MonthlyScheduleInUtc { Hour = hour, Minute = minute, DayInMonth = dayOfMonthInt };
+                return ret;
+            }
+            else if (
+                cronExpressionItems.First().IsNumeric() && 
+                cronExpressionItems.Second().IsNumeric() &&
+                cronExpressionItems.Third().IsNumeric() &&
+                cronExpressionItems.Fourth().IsNumeric() && 
+                cronExpressionItems.Fifth() == "*")
+            {
+                var minuteString = cronExpressionItems.First();
+                var minute = int.Parse(minuteString);
+
+                var hourString = cronExpressionItems.Second();
+                var hour = int.Parse(hourString);
+
+                var dayOfMonthString = cronExpressionItems.Third();
+                var dayOfMonthInt = int.Parse(dayOfMonthString);
+
+                var monthInYearString = cronExpressionItems.Fourth();
+                var monthInYearInt = int.Parse(monthInYearString);
+                var monthInYear = (MonthOfYear)monthInYearInt;
+
+                var ret = new YearlyScheduleInUtc { Hour = hour, Minute = minute, DayInMonth = dayOfMonthInt, MonthOfYear = monthInYear };
+                return ret;
+            }
+            else
+            {
+                throw new NotSupportedException("Expression is not supported for translation: " + cronExpression);
+            }
+        }
+
+        private static bool IsNumeric(this string item)
+        {
+            int test;
+            var success = int.TryParse(item, out test);
+            return success;
+        }
+
+        private static string Second(this IEnumerable<string> items)
+        {
+            return items.Skip(1).First();
+        }
+
+        private static string Third(this IEnumerable<string> items)
+        {
+            return items.Skip(2).First();
+        }
+
+        private static string Fourth(this IEnumerable<string> items)
+        {
+            return items.Skip(3).First();
+        }
+
+        private static string Fifth(this IEnumerable<string> items)
+        {
+            return items.Skip(4).First();
+        }
+    }
+
+    /// <summary>
+    /// Base class of the schedule for a recurring message sequence.
+    /// </summary>
+    [Bindable(BindableSupport.Default)]
+    public abstract class ScheduleBase : ICloneable
+    {
+        /// <summary>
+        /// Checks to see if the schedule is valid (i.e. there aren't 61 minutes in an hour).
+        /// </summary>
+        /// <returns>True if valid and false if not.</returns>
+        public bool IsValid()
+        {
+            try
+            {
+                this.ThrowIfInvalid();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks to make sure the construct is valid (i.e. there aren't 61 minutes in an hour).
+        /// </summary>
+        public abstract void ThrowIfInvalid();
+
+        /// <inheritdoc />
+        public object Clone()
+        {
+            var expression = ScheduleCronExpressionConverter.ToCronExpression(this);
+            var ret = ScheduleCronExpressionConverter.FromCronExpression(expression);
+            return ret;
         }
     }
 
