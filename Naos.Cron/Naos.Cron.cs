@@ -314,6 +314,16 @@ namespace Naos.Cron
         /// </summary>
         public abstract void ThrowIfInvalid();
 
+        /// <summary>
+        /// Generates a cron expression from the schedule object.
+        /// </summary>
+        /// <returns>Generated cron expression from object.</returns>
+        public string ToCronExpression()
+        {
+            var ret = ScheduleCronExpressionConverter.ToCronExpression(this);
+            return ret;
+        }
+
         /// <inheritdoc />
         public object Clone()
         {
