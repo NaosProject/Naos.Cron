@@ -149,14 +149,18 @@ namespace Naos.Cron.Test
         [Fact]
         public void MonthlySchedule_DayUnderZero_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new MonthlyScheduleInUtc { DayInMonth = -1 }.ThrowIfInvalid());
+            var ex =
+                Assert.Throws<ArgumentException>(
+                    () => new MonthlyScheduleInUtc { DaysOfMonth = new[] { -1 } }.ThrowIfInvalid());
             Assert.Equal("The day in the month cannot be less than 0.  It was -1", ex.Message);
         }
 
         [Fact]
         public void MonthlySchedule_DayThirtyTwo_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new MonthlyScheduleInUtc { DayInMonth = 32 }.ThrowIfInvalid());
+            var ex =
+                Assert.Throws<ArgumentException>(
+                    () => new MonthlyScheduleInUtc { DaysOfMonth = new[] { 32 } }.ThrowIfInvalid());
             Assert.Equal("The day in the month cannot be more than 31.  It was 32", ex.Message);
         }
 
@@ -199,14 +203,18 @@ namespace Naos.Cron.Test
         [Fact]
         public void YearlySchedule_DayUnderZero_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new YearlyScheduleInUtc { DayInMonth = -1 }.ThrowIfInvalid());
+            var ex =
+                Assert.Throws<ArgumentException>(
+                    () => new YearlyScheduleInUtc { DaysOfMonth = new[] { -1 } }.ThrowIfInvalid());
             Assert.Equal("The day in the month cannot be less than 0.  It was -1", ex.Message);
         }
 
         [Fact]
         public void YearlySchedule_DayThirtyTwo_Invalid()
         {
-            var ex = Assert.Throws<ArgumentException>(() => new YearlyScheduleInUtc { DayInMonth = 32 }.ThrowIfInvalid());
+            var ex =
+                Assert.Throws<ArgumentException>(
+                    () => new YearlyScheduleInUtc { DaysOfMonth = new[] { 32 } }.ThrowIfInvalid());
             Assert.Equal("The day in the month cannot be more than 31.  It was 32", ex.Message);
         }
 

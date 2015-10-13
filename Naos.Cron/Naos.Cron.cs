@@ -10,7 +10,6 @@ namespace Naos.Cron
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
-    using System.Text.RegularExpressions;
 
     /// <summary>
     /// The months in the year.
@@ -110,17 +109,31 @@ namespace Naos.Cron
             else if (scheduleType == typeof(WeeklyScheduleInUtc))
             {
                 var weeklySchedule = (WeeklyScheduleInUtc)schedule;
-                return string.Format("{0} {1} * * {2}", weeklySchedule.Minute, weeklySchedule.Hour, (int)weeklySchedule.DayOfWeek);
+                var daysOfWeekString = string.Join(",", weeklySchedule.DaysOfWeek.Select(_ => (int)_));
+                return string.Format("{0} {1} * * {2}", weeklySchedule.Minute, weeklySchedule.Hour, daysOfWeekString);
             }
             else if (scheduleType == typeof(MonthlyScheduleInUtc))
             {
                 var monthlySchedule = (MonthlyScheduleInUtc)schedule;
-                return string.Format("{0} {1} {2} * *", monthlySchedule.Minute, monthlySchedule.Hour, monthlySchedule.DayInMonth);
+                var daysOfMonthString = string.Join(",", monthlySchedule.DaysOfMonth.Select(_ => (int)_));
+                return string.Format("{0} {1} {2} * *", monthlySchedule.Minute, monthlySchedule.Hour, daysOfMonthString);
             }
             else if (scheduleType == typeof(YearlyScheduleInUtc))
             {
                 var yearlySchedule = (YearlyScheduleInUtc)schedule;
-                return string.Format("{0} {1} {2} {3} *", yearlySchedule.Minute, yearlySchedule.Hour, yearlySchedule.DayInMonth, (int)yearlySchedule.MonthOfYear);
+                var daysOfMonthString = string.Join(",", yearlySchedule.DaysOfMonth.Select(_ => (int)_));
+                var monthsOfYearString = string.Join(",", yearlySchedule.MonthsOfYear.Select(_ => (int)_));
+                return string.Format(
+                    "{0} {1} {2} {3} *",
+                    yearlySchedule.Minute,
+                    yearlySchedule.Hour,
+                    daysOfMonthString,
+                    monthsOfYearString);
+            }
+            else if (scheduleType == typeof(ExpressionSchedule))
+            {
+                var expressionSchedule = (ExpressionSchedule)schedule;
+                return expressionSchedule.CronExpression;
             }
 
             throw new NotSupportedException("Unsupported Schedule: " + scheduleType.AssemblyQualifiedName);
@@ -183,11 +196,10 @@ namespace Naos.Cron
                 var hourString = cronExpressionItems.Second();
                 var hour = int.Parse(hourString);
 
-                var dayOfWeekString = cronExpressionItems.Fifth();
-                var dayOfWeekInt = int.Parse(dayOfWeekString);
-                var dayOfWeek = (DayOfWeek)dayOfWeekInt;
+                var daysOfWeekString = cronExpressionItems.Fifth();
+                var daysOfWeek = daysOfWeekString.Split(',').Select(int.Parse).Cast<DayOfWeek>().ToList();
 
-                var ret = new WeeklyScheduleInUtc { Hour = hour, Minute = minute, DayOfWeek = dayOfWeek };
+                var ret = new WeeklyScheduleInUtc { Hour = hour, Minute = minute, DaysOfWeek = daysOfWeek };
                 return ret;
             }
             else if (
@@ -203,10 +215,10 @@ namespace Naos.Cron
                 var hourString = cronExpressionItems.Second();
                 var hour = int.Parse(hourString);
 
-                var dayOfMonthString = cronExpressionItems.Third();
-                var dayOfMonthInt = int.Parse(dayOfMonthString);
+                var daysOfMonthString = cronExpressionItems.Third();
+                var daysOfMonthInt = daysOfMonthString.Split(',').Select(int.Parse).ToList();
 
-                var ret = new MonthlyScheduleInUtc { Hour = hour, Minute = minute, DayInMonth = dayOfMonthInt };
+                var ret = new MonthlyScheduleInUtc { Hour = hour, Minute = minute, DaysOfMonth = daysOfMonthInt };
                 return ret;
             }
             else if (
@@ -222,14 +234,13 @@ namespace Naos.Cron
                 var hourString = cronExpressionItems.Second();
                 var hour = int.Parse(hourString);
 
-                var dayOfMonthString = cronExpressionItems.Third();
-                var dayOfMonthInt = int.Parse(dayOfMonthString);
+                var daysOfMonthString = cronExpressionItems.Third();
+                var daysOfMonthInt = daysOfMonthString.Split(',').Select(int.Parse).ToList();
 
-                var monthInYearString = cronExpressionItems.Fourth();
-                var monthInYearInt = int.Parse(monthInYearString);
-                var monthInYear = (MonthOfYear)monthInYearInt;
+                var monthsOfYearString = cronExpressionItems.Fourth();
+                var monthsOfYear = monthsOfYearString.Split(',').Select(int.Parse).Cast<MonthOfYear>().ToList();
 
-                var ret = new YearlyScheduleInUtc { Hour = hour, Minute = minute, DayInMonth = dayOfMonthInt, MonthOfYear = monthInYear };
+                var ret = new YearlyScheduleInUtc { Hour = hour, Minute = minute, DaysOfMonth = daysOfMonthInt, MonthsOfYear = monthsOfYear };
                 return ret;
             }
             else
@@ -240,9 +251,18 @@ namespace Naos.Cron
 
         private static bool IsNumeric(this string item)
         {
-            int test;
-            var success = int.TryParse(item, out test);
-            return success;
+            var items = item.Split(',');
+            foreach (var splitItem in items)
+            {
+                int test;
+                var success = int.TryParse(splitItem, out test);
+                if (!success)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static string Second(this IEnumerable<string> items)
@@ -297,6 +317,18 @@ namespace Naos.Cron
         /// <inheritdoc />
         public object Clone()
         {
+            // special case for expression and null...
+            if (this.GetType() == typeof(NullSchedule))
+            {
+                return new NullSchedule();
+            }
+
+            if (this.GetType() == typeof(ExpressionSchedule))
+            {
+                var typed = (ExpressionSchedule)this;
+                return new ExpressionSchedule { CronExpression = typed.CronExpression };
+            }
+
             var expression = ScheduleCronExpressionConverter.ToCronExpression(this);
             var ret = ScheduleCronExpressionConverter.FromCronExpression(expression);
             return ret;
@@ -312,6 +344,24 @@ namespace Naos.Cron
         public override void ThrowIfInvalid()
         {
             /* no-op - always valid */
+        }
+    }
+
+    /// <summary>
+    /// Expression implementation of a schedule (serialized easily and converted into class version at any time).
+    /// </summary>
+    public class ExpressionSchedule : ScheduleBase
+    {
+        /// <summary>
+        /// Gets or sets the cron expression.
+        /// </summary>
+        public string CronExpression { get; set; }
+
+        /// <inheritdoc />
+        public override void ThrowIfInvalid()
+        {
+            var objectVersion = ScheduleCronExpressionConverter.FromCronExpression(this.CronExpression);
+            objectVersion.ThrowIfInvalid();
         }
     }
 
@@ -397,10 +447,17 @@ namespace Naos.Cron
     /// </summary>
     public class WeeklyScheduleInUtc : ScheduleBase
     {
+        // this way the default will be Sunday NOT an invalid empty...
+        private IReadOnlyCollection<DayOfWeek> daysOfWeek = new List<DayOfWeek>(new[] { DayOfWeek.Sunday });
+
         /// <summary>
-        /// Gets or sets the day of the week (default is Sunday).
+        /// Gets or sets the days of the week (default is Sunday).
         /// </summary>
-        public DayOfWeek DayOfWeek { get; set; }
+        public IReadOnlyCollection<DayOfWeek> DaysOfWeek
+        {
+            get { return this.daysOfWeek; }
+            set { this.daysOfWeek = value; }
+        }
 
         /// <summary>
         /// Gets or sets the UTC hour in the day.
@@ -442,16 +499,16 @@ namespace Naos.Cron
     /// </summary>
     public class MonthlyScheduleInUtc : ScheduleBase
     {
-        // this way the default will be 1 NOT an invalid 0...
-        private int dayInMonth = 1;
+        // this way the default will be 1 NOT an invalid empty...
+        private IReadOnlyCollection<int> daysOfMonth = new List<int>(new[] { 1 });
 
         /// <summary>
         /// Gets or sets the day in the month (default is 1st).
         /// </summary>
-        public int DayInMonth
+        public IReadOnlyCollection<int> DaysOfMonth
         {
-            get { return this.dayInMonth; }
-            set { this.dayInMonth = value; }
+            get { return this.daysOfMonth; }
+            set { this.daysOfMonth = value; }
         }
 
         /// <summary>
@@ -487,14 +544,17 @@ namespace Naos.Cron
                 throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
             }
 
-            if (this.DayInMonth < 1)
+            foreach (var dayinMonth in this.DaysOfMonth)
             {
-                throw new ArgumentException("The day in the month cannot be less than 0.  It was " + this.DayInMonth);
-            }
+                if (dayinMonth < 1)
+                {
+                    throw new ArgumentException("The day in the month cannot be less than 0.  It was " + dayinMonth);
+                }
 
-            if (this.DayInMonth > 31)
-            {
-                throw new ArgumentException("The day in the month cannot be more than 31.  It was " + this.DayInMonth);
+                if (dayinMonth > 31)
+                {
+                    throw new ArgumentException("The day in the month cannot be more than 31.  It was " + dayinMonth);
+                }
             }
         }
     }
@@ -504,28 +564,28 @@ namespace Naos.Cron
     /// </summary>
     public class YearlyScheduleInUtc : ScheduleBase
     {
-        // this way the default will be January NOT an invalid 0...
-        private MonthOfYear monthOfYear = MonthOfYear.January;
+        // this way the default will be January NOT an invalid empty...
+        private IReadOnlyCollection<MonthOfYear> monthsOfYear = new List<MonthOfYear>(new[] { MonthOfYear.January });
 
         /// <summary>
         /// Gets or sets the month in the year (default is January).
         /// </summary>
-        public MonthOfYear MonthOfYear
+        public IReadOnlyCollection<MonthOfYear> MonthsOfYear
         {
-            get { return this.monthOfYear; }
-            set { this.monthOfYear = value; }
+            get { return this.monthsOfYear; }
+            set { this.monthsOfYear = value; }
         }
 
-        // this way the default will be 1 NOT an invalid 0...
-        private int dayInMonth = 1;
+        // this way the default will be 1 NOT an invalid empty...
+        private IReadOnlyCollection<int> daysOfMonth = new List<int>(new[] { 1 });
 
         /// <summary>
         /// Gets or sets the day in the month (default is 1st).
         /// </summary>
-        public int DayInMonth
+        public IReadOnlyCollection<int> DaysOfMonth
         {
-            get { return this.dayInMonth; }
-            set { this.dayInMonth = value; }
+            get { return this.daysOfMonth; }
+            set { this.daysOfMonth = value; }
         }
 
         /// <summary>
@@ -561,14 +621,17 @@ namespace Naos.Cron
                 throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
             }
 
-            if (this.DayInMonth < 1)
+            foreach (var dayinMonth in this.DaysOfMonth)
             {
-                throw new ArgumentException("The day in the month cannot be less than 0.  It was " + this.DayInMonth);
-            }
+                if (dayinMonth < 1)
+                {
+                    throw new ArgumentException("The day in the month cannot be less than 0.  It was " + dayinMonth);
+                }
 
-            if (this.DayInMonth > 31)
-            {
-                throw new ArgumentException("The day in the month cannot be more than 31.  It was " + this.DayInMonth);
+                if (dayinMonth > 31)
+                {
+                    throw new ArgumentException("The day in the month cannot be more than 31.  It was " + dayinMonth);
+                }
             }
         }
     }

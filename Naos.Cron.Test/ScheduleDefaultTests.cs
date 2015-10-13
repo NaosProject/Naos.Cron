@@ -7,6 +7,7 @@
 namespace Naos.Cron.Test
 {
     using System;
+    using System.Linq;
 
     using Xunit;
 
@@ -16,28 +17,28 @@ namespace Naos.Cron.Test
         public void WeeklyScheduleInUtc_DefaultDayOfWeek_IsSunday()
         {
             var o = new WeeklyScheduleInUtc();
-            Assert.Equal(DayOfWeek.Sunday, o.DayOfWeek);
+            Assert.Equal(DayOfWeek.Sunday, o.DaysOfWeek.Single());
         }
 
         [Fact]
         public void MonthlyScheduleInUtc_DefaultDay_IsOne()
         {
             var o = new MonthlyScheduleInUtc();
-            Assert.Equal(1, o.DayInMonth);
+            Assert.Equal(1, o.DaysOfMonth.Single());
         }
 
         [Fact]
         public void YearlyScheduleInUtc_DefaultDay_IsOne()
         {
             var o = new YearlyScheduleInUtc();
-            Assert.Equal(1, o.DayInMonth);
+            Assert.Equal(1, o.DaysOfMonth.Single());
         }
 
         [Fact]
         public void YearlyScheduleInUtc_DefaultYear_IsJanuary()
         {
             var o = new YearlyScheduleInUtc();
-            Assert.Equal(MonthOfYear.January, o.MonthOfYear);
+            Assert.Equal(MonthOfYear.January, o.MonthsOfYear.Single());
         }
     }
 }
