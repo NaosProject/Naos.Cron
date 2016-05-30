@@ -92,9 +92,17 @@ namespace Naos.Cron
             schedule.ThrowIfInvalid();
 
             var scheduleType = schedule.GetType();
-            if (scheduleType == typeof(MinutelySchedule))
+            if (scheduleType == typeof(IntervalSchedule))
             {
-                return "* * * * *";
+                var intervalSchedule = (IntervalSchedule)schedule;
+                if (intervalSchedule.Interval == TimeSpan.Zero)
+                {
+                    return "* * * * *";
+                }
+                else
+                {
+                    return "*/" + intervalSchedule.Interval.TotalMinutes + " * * * *";
+                }
             }
             else if (scheduleType == typeof(HourlySchedule))
             {
@@ -161,7 +169,22 @@ namespace Naos.Cron
             // probably should do this with regex but my regex is so bad...
             if (cronExpressionItems.All(_ => _ == "*"))
             {
-                var ret = new MinutelySchedule();
+                var ret = new IntervalSchedule();
+                return ret;
+            }
+            else if (cronExpressionItems.First().Contains("/"))
+            {
+                var minuteString = cronExpressionItems.First();
+                var minuteItems = minuteString.Split('/');
+                if (minuteItems[0] != "*")
+                {
+                    throw new ArgumentException("Invalid interval format, should be '*/[interval minutes]', not '" + minuteString + "'");
+                }
+
+                var intervalMinutesString = minuteItems[1];
+                var intervalMinutesInt = int.Parse(intervalMinutesString);
+                var intervalMinutesTimeSpan = TimeSpan.FromMinutes(intervalMinutesInt);
+                var ret = new IntervalSchedule { Interval = intervalMinutesTimeSpan };
                 return ret;
             }
             else if (cronExpressionItems.First().IsNumeric() && cronExpressionItems.Skip(1).All(_ => _ == "*"))
@@ -197,7 +220,7 @@ namespace Naos.Cron
                 var hour = int.Parse(hourString);
 
                 var daysOfWeekString = cronExpressionItems.Fifth();
-                var daysOfWeek = daysOfWeekString.Split(',').Select(int.Parse).Cast<DayOfWeek>().ToList();
+                var daysOfWeek = daysOfWeekString.Split(',').Select(int.Parse).Cast<DayOfWeek>().ToArray();
 
                 var ret = new WeeklyScheduleInUtc { Hour = hour, Minute = minute, DaysOfWeek = daysOfWeek };
                 return ret;
@@ -216,7 +239,7 @@ namespace Naos.Cron
                 var hour = int.Parse(hourString);
 
                 var daysOfMonthString = cronExpressionItems.Third();
-                var daysOfMonthInt = daysOfMonthString.Split(',').Select(int.Parse).ToList();
+                var daysOfMonthInt = daysOfMonthString.Split(',').Select(int.Parse).ToArray();
 
                 var ret = new MonthlyScheduleInUtc { Hour = hour, Minute = minute, DaysOfMonth = daysOfMonthInt };
                 return ret;
@@ -235,10 +258,10 @@ namespace Naos.Cron
                 var hour = int.Parse(hourString);
 
                 var daysOfMonthString = cronExpressionItems.Third();
-                var daysOfMonthInt = daysOfMonthString.Split(',').Select(int.Parse).ToList();
+                var daysOfMonthInt = daysOfMonthString.Split(',').Select(int.Parse).ToArray();
 
                 var monthsOfYearString = cronExpressionItems.Fourth();
-                var monthsOfYear = monthsOfYearString.Split(',').Select(int.Parse).Cast<MonthOfYear>().ToList();
+                var monthsOfYear = monthsOfYearString.Split(',').Select(int.Parse).Cast<MonthOfYear>().ToArray();
 
                 var ret = new YearlyScheduleInUtc { Hour = hour, Minute = minute, DaysOfMonth = daysOfMonthInt, MonthsOfYear = monthsOfYear };
                 return ret;
@@ -376,10 +399,15 @@ namespace Naos.Cron
     }
 
     /// <summary>
-    /// Minutely version of the schedule (will repeat every minute).
+    /// Interval version of the schedule (will repeat every specified interval).
     /// </summary>
-    public class MinutelySchedule : ScheduleBase
+    public class IntervalSchedule : ScheduleBase
     {
+        /// <summary>
+        /// Gets or sets the interval to repeat.
+        /// </summary>
+        public TimeSpan Interval { get; set; }
+
         /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
@@ -457,13 +485,13 @@ namespace Naos.Cron
     /// </summary>
     public class WeeklyScheduleInUtc : ScheduleBase
     {
-        // this way the default will be Sunday NOT an invalid empty...
-        private IReadOnlyCollection<DayOfWeek> daysOfWeek = new List<DayOfWeek>(new[] { DayOfWeek.Sunday });
+        // this way the default will be Sunday NOT an invalid empty... (MUST be an array for serialization to properly overrite if specified)
+        private DayOfWeek[] daysOfWeek = new[] { DayOfWeek.Sunday };
 
         /// <summary>
         /// Gets or sets the days of the week (default is Sunday).
         /// </summary>
-        public IReadOnlyCollection<DayOfWeek> DaysOfWeek
+        public DayOfWeek[] DaysOfWeek
         {
             get { return this.daysOfWeek; }
             set { this.daysOfWeek = value; }
@@ -509,13 +537,13 @@ namespace Naos.Cron
     /// </summary>
     public class MonthlyScheduleInUtc : ScheduleBase
     {
-        // this way the default will be 1 NOT an invalid empty...
-        private IReadOnlyCollection<int> daysOfMonth = new List<int>(new[] { 1 });
+        // this way the default will be 1 NOT an invalid empty... (MUST be an array for serialization to properly overrite if specified)
+        private int[] daysOfMonth = new[] { 1 };
 
         /// <summary>
         /// Gets or sets the day in the month (default is 1st).
         /// </summary>
-        public IReadOnlyCollection<int> DaysOfMonth
+        public int[] DaysOfMonth
         {
             get { return this.daysOfMonth; }
             set { this.daysOfMonth = value; }
@@ -574,25 +602,25 @@ namespace Naos.Cron
     /// </summary>
     public class YearlyScheduleInUtc : ScheduleBase
     {
-        // this way the default will be January NOT an invalid empty...
-        private IReadOnlyCollection<MonthOfYear> monthsOfYear = new List<MonthOfYear>(new[] { MonthOfYear.January });
+        // this way the default will be January NOT an invalid empty... (MUST be an array for serialization to properly overrite if specified)
+        private MonthOfYear[] monthsOfYear = new[] { MonthOfYear.January };
 
         /// <summary>
         /// Gets or sets the month in the year (default is January).
         /// </summary>
-        public IReadOnlyCollection<MonthOfYear> MonthsOfYear
+        public MonthOfYear[] MonthsOfYear
         {
             get { return this.monthsOfYear; }
             set { this.monthsOfYear = value; }
         }
 
-        // this way the default will be 1 NOT an invalid empty...
-        private IReadOnlyCollection<int> daysOfMonth = new List<int>(new[] { 1 });
+        // this way the default will be 1 NOT an invalid empty... (MUST be an array for serialization to properly overrite if specified)
+        private int[] daysOfMonth = new[] { 1 };
 
         /// <summary>
         /// Gets or sets the day in the month (default is 1st).
         /// </summary>
-        public IReadOnlyCollection<int> DaysOfMonth
+        public int[] DaysOfMonth
         {
             get { return this.daysOfMonth; }
             set { this.daysOfMonth = value; }

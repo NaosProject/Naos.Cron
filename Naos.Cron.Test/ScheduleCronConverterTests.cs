@@ -68,15 +68,28 @@ namespace Naos.Cron.Test
         }
 
         [Fact]
-        public void GetCronExpressionFromSchedule_Expression_Works()
+        public void GetCronExpressionFromScheduleNoZeroIntervalMinutes_Expression_Works()
         {
             var schedule = new ExpressionSchedule { CronExpression = "* * * * *" };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
             Assert.Equal("* * * * *", cron);
 
             var newSchedule = ScheduleCronExpressionConverter.FromCronExpression(cron);
-            var newScheduleTyped = Assert.IsType<MinutelySchedule>(newSchedule);
-            Assert.Equal(typeof(MinutelySchedule), newScheduleTyped.GetType());
+            var newScheduleTyped = Assert.IsType<IntervalSchedule>(newSchedule);
+            Assert.Equal(typeof(IntervalSchedule), newScheduleTyped.GetType());
+        }
+
+        [Fact]
+        public void GetCronExpressionFromScheduleIntervalMinutesDefined_Expression_Works()
+        {
+            var schedule = new ExpressionSchedule { CronExpression = "*/2 * * * *" };
+            var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
+            Assert.Equal("*/2 * * * *", cron);
+
+            var newSchedule = ScheduleCronExpressionConverter.FromCronExpression(cron);
+            var newScheduleTyped = Assert.IsType<IntervalSchedule>(newSchedule);
+            Assert.Equal(typeof(IntervalSchedule), newScheduleTyped.GetType());
+            Assert.Equal(2, newScheduleTyped.Interval.TotalMinutes);
         }
 
         [Fact]
@@ -91,14 +104,14 @@ namespace Naos.Cron.Test
         }
 
         [Fact]
-        public void GetCronExpressionFromSchedule_Minutely_Works()
+        public void GetCronExpressionFromSchedule_Interval_Works()
         {
-            var schedule = new MinutelySchedule();
+            var schedule = new IntervalSchedule();
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
             Assert.Equal("* * * * *", cron);
 
             var newSchedule = ScheduleCronExpressionConverter.FromCronExpression(cron);
-            var newScheduleTyped = Assert.IsType<MinutelySchedule>(newSchedule);
+            var newScheduleTyped = Assert.IsType<IntervalSchedule>(newSchedule);
             Assert.Equal(schedule.GetType(), newScheduleTyped.GetType());
         }
 

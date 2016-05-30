@@ -37,9 +37,17 @@ namespace Naos.Cron.Test
         }
 
         [Fact]
-        public void MinutelySchedule_Valid()
+        public void IntervalScheduleZeroInterval_Valid()
         {
-            var o = new MinutelySchedule();
+            var o = new IntervalSchedule();
+            Assert.NotNull(o);
+            o.ThrowIfInvalid();
+        }
+
+        [Fact]
+        public void IntervalScheduleIntervalDefined_Valid()
+        {
+            var o = new IntervalSchedule { Interval = TimeSpan.FromHours(1) };
             Assert.NotNull(o);
             o.ThrowIfInvalid();
         }
