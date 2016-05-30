@@ -1,0 +1,6 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <description>Schedule representation library that has objects to represent recurring schedules with the ability to convert to and from a UNIX Cron Expression.</description>
+  </metadata>
+</package>

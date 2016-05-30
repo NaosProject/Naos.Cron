@@ -2,7 +2,7 @@
 
 Naos.Cron
 ========
-Scheduling library that has objects to represent recurring schedules with the ability to be able to convert to and from a UNIX Cron Expression. 
+Schedule representation library that has objects to represent recurring schedules with the ability to convert to and from a UNIX Cron Expression. 
 
 Use - Referencing in your code
 -----------

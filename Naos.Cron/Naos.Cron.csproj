@@ -37,6 +37,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Naos.Cron.override-nuspec" />
     <Compile Include="Naos.Cron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
