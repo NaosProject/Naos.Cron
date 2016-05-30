@@ -95,7 +95,7 @@ namespace Naos.Cron
             if (scheduleType == typeof(IntervalSchedule))
             {
                 var intervalSchedule = (IntervalSchedule)schedule;
-                if (intervalSchedule.Interval == TimeSpan.Zero)
+                if (intervalSchedule.Interval.TotalMinutes.Equals(1))
                 {
                     return "* * * * *";
                 }
@@ -169,7 +169,7 @@ namespace Naos.Cron
             // probably should do this with regex but my regex is so bad...
             if (cronExpressionItems.All(_ => _ == "*"))
             {
-                var ret = new IntervalSchedule();
+                var ret = new IntervalSchedule { Interval = TimeSpan.FromMinutes(1) };
                 return ret;
             }
             else if (cronExpressionItems.First().Contains("/"))
@@ -411,7 +411,10 @@ namespace Naos.Cron
         /// <inheritdoc />
         public override void ThrowIfInvalid()
         {
-            /* no-op - always valid */
+            if (this.Interval == default(TimeSpan) || this.Interval == TimeSpan.Zero)
+            {
+                throw new ArgumentException("The interval must be specified.");
+            }
         }
     }
 

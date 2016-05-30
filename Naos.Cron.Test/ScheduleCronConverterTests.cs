@@ -68,19 +68,7 @@ namespace Naos.Cron.Test
         }
 
         [Fact]
-        public void GetCronExpressionFromScheduleNoZeroIntervalMinutes_Expression_Works()
-        {
-            var schedule = new ExpressionSchedule { CronExpression = "* * * * *" };
-            var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
-            Assert.Equal("* * * * *", cron);
-
-            var newSchedule = ScheduleCronExpressionConverter.FromCronExpression(cron);
-            var newScheduleTyped = Assert.IsType<IntervalSchedule>(newSchedule);
-            Assert.Equal(typeof(IntervalSchedule), newScheduleTyped.GetType());
-        }
-
-        [Fact]
-        public void GetCronExpressionFromScheduleIntervalMinutesDefined_Expression_Works()
+        public void GetCronExpressionFromScheduleInterval_Expression_Works()
         {
             var schedule = new ExpressionSchedule { CronExpression = "*/2 * * * *" };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
@@ -106,13 +94,14 @@ namespace Naos.Cron.Test
         [Fact]
         public void GetCronExpressionFromSchedule_Interval_Works()
         {
-            var schedule = new IntervalSchedule();
+            var schedule = new IntervalSchedule { Interval = TimeSpan.FromMinutes(1) };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
             Assert.Equal("* * * * *", cron);
 
             var newSchedule = ScheduleCronExpressionConverter.FromCronExpression(cron);
             var newScheduleTyped = Assert.IsType<IntervalSchedule>(newSchedule);
             Assert.Equal(schedule.GetType(), newScheduleTyped.GetType());
+            Assert.Equal(schedule.Interval, newScheduleTyped.Interval);
         }
 
         [Fact]

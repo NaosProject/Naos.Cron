@@ -37,11 +37,10 @@ namespace Naos.Cron.Test
         }
 
         [Fact]
-        public void IntervalScheduleZeroInterval_Valid()
+        public void IntervalScheduleZeroInterval_Invalid()
         {
-            var o = new IntervalSchedule();
-            Assert.NotNull(o);
-            o.ThrowIfInvalid();
+            var ex = Assert.Throws<ArgumentException>(() => new IntervalSchedule().ThrowIfInvalid());
+            Assert.Equal("The interval must be specified.", ex.Message);
         }
 
         [Fact]
