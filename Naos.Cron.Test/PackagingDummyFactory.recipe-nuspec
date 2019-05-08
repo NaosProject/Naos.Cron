@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Naos.Cron.Recipes.DummyFactory</id>
+    <description>A dummy factory for Cron types.</description>
+    <tags>naos packaging fakeiteasy autofixture dummy factory</tags>
+    <dependencies>
+      <dependency id="Naos.Cron" version ="$version$" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.113" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="CronDummyFactory.cs" target="content\net462\.recipes\Naos.Cron\CronDummyFactory.cs" />
+  </files>
+</package>

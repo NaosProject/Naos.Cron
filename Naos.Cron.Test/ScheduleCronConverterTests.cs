@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ScheduleCronConverterTests.cs" company="Naos">
-//   Copyright 2015 Naos
+// <copyright file="ScheduleCronConverterTests.cs" company="Naos Project">
+//    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -11,54 +11,62 @@ namespace Naos.Cron.Test
 
     using Xunit;
 
-    public class ScheduleCronConverterTests
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
+    public static class ScheduleCronConverterTests
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetScheduleFromCronExpression_TooManyColumns_Throws()
+        public static void GetScheduleFromCronExpression_TooManyColumns_Throws()
         {
             var ex = Assert.Throws<ArgumentException>(() => ScheduleCronExpressionConverter.FromCronExpression("* * * * * *"));
             Assert.Equal("Incorrect number of values in the cron expression.\r\nParameter name: cronExpression", ex.Message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetScheduleFromCronExpression_TooFewColumns_Throws()
+        public static void GetScheduleFromCronExpression_TooFewColumns_Throws()
         {
             var ex = Assert.Throws<ArgumentException>(() => ScheduleCronExpressionConverter.FromCronExpression("* * * *"));
             Assert.Equal("Incorrect number of values in the cron expression.\r\nParameter name: cronExpression", ex.Message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetScheduleFromCronExpression_Null_Throws()
+        public static void GetScheduleFromCronExpression_Null_Throws()
         {
             var ex = Assert.Throws<ArgumentException>(() => ScheduleCronExpressionConverter.FromCronExpression(null));
             Assert.Equal("Cannot have a null or empty cron expression.\r\nParameter name: cronExpression", ex.Message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetScheduleFromCronExpression_Empty_Throws()
+        public static void GetScheduleFromCronExpression_Empty_Throws()
         {
             var ex = Assert.Throws<ArgumentException>(() => ScheduleCronExpressionConverter.FromCronExpression(string.Empty));
             Assert.Equal("Cannot have a null or empty cron expression.\r\nParameter name: cronExpression", ex.Message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetScheduleFromCronExpression_UnsupportedExpression_Throws()
+        public static void GetScheduleFromCronExpression_UnsupportedExpression_Throws()
         {
             var expression = "a s d f g";
             var ex = Assert.Throws<NotSupportedException>(() => ScheduleCronExpressionConverter.FromCronExpression(expression));
             Assert.Equal("Expression is not supported for translation: " + expression, ex.Message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_UnsupportedSchedule_Throws()
+        public static void GetCronExpressionFromSchedule_UnsupportedSchedule_Throws()
         {
             var schedule = new NullSchedule();
             var ex = Assert.Throws<NotSupportedException>(() => ScheduleCronExpressionConverter.ToCronExpression(schedule));
             Assert.Equal("Unsupported Schedule: " + schedule.GetType().AssemblyQualifiedName, ex.Message);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_NullClone_Works()
+        public static void GetCronExpressionFromSchedule_NullClone_Works()
         {
             var schedule = new NullSchedule();
             var cloned = schedule.Clone();
@@ -67,8 +75,9 @@ namespace Naos.Cron.Test
             Assert.NotSame(schedule, clonedTyped);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromScheduleInterval_Expression_Works()
+        public static void GetCronExpressionFromScheduleInterval_Expression_Works()
         {
             var schedule = new ExpressionSchedule { CronExpression = "*/2 * * * *" };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
@@ -80,8 +89,9 @@ namespace Naos.Cron.Test
             Assert.Equal(2, newScheduleTyped.Interval.TotalMinutes);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_ExpressionClone_Works()
+        public static void GetCronExpressionFromSchedule_ExpressionClone_Works()
         {
             var schedule = new ExpressionSchedule { CronExpression = "* * * * *" };
             var cloned = schedule.Clone();
@@ -91,8 +101,9 @@ namespace Naos.Cron.Test
             Assert.NotSame(schedule, clonedTyped);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_Interval_Works()
+        public static void GetCronExpressionFromSchedule_Interval_Works()
         {
             var schedule = new IntervalSchedule { Interval = TimeSpan.FromMinutes(1) };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
@@ -104,8 +115,9 @@ namespace Naos.Cron.Test
             Assert.Equal(schedule.Interval, newScheduleTyped.Interval);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_Hourly_Works()
+        public static void GetCronExpressionFromSchedule_Hourly_Works()
         {
             var schedule = new HourlySchedule { Minute = 7 };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
@@ -117,8 +129,9 @@ namespace Naos.Cron.Test
             Assert.Equal(schedule.Minute, newScheduleTyped.Minute);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_Daily_Works()
+        public static void GetCronExpressionFromSchedule_Daily_Works()
         {
             var schedule = new DailyScheduleInUtc { Hour = 22, Minute = 17 };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
@@ -131,14 +144,15 @@ namespace Naos.Cron.Test
             Assert.Equal(schedule.Minute, newScheduleTyped.Minute);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_Weekly_Works()
+        public static void GetCronExpressionFromSchedule_Weekly_Works()
         {
             var schedule = new WeeklyScheduleInUtc()
                                {
                                    DaysOfWeek = new[] { DayOfWeek.Thursday },
                                    Hour = 21,
-                                   Minute = 17
+                                   Minute = 17,
                                };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
             Assert.Equal("17 21 * * 4", cron);
@@ -151,14 +165,15 @@ namespace Naos.Cron.Test
             Assert.Equal(schedule.Minute, newScheduleTyped.Minute);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_WeeklyMultipleDays_Works()
+        public static void GetCronExpressionFromSchedule_WeeklyMultipleDays_Works()
         {
             var schedule = new WeeklyScheduleInUtc()
                                {
                                    DaysOfWeek = new[] { DayOfWeek.Tuesday, DayOfWeek.Thursday },
                                    Hour = 21,
-                                   Minute = 17
+                                   Minute = 17,
                                };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
             Assert.Equal("17 21 * * 2,4", cron);
@@ -172,8 +187,9 @@ namespace Naos.Cron.Test
             Assert.Equal(schedule.Minute, newScheduleTyped.Minute);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_Monthly_Works()
+        public static void GetCronExpressionFromSchedule_Monthly_Works()
         {
             var schedule = new MonthlyScheduleInUtc { DaysOfMonth = new[] { 20 }, Hour = 22, Minute = 48 };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
@@ -187,15 +203,16 @@ namespace Naos.Cron.Test
             Assert.Equal(schedule.Minute, newScheduleTyped.Minute);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
         [Fact]
-        public void GetCronExpressionFromSchedule_Yearly_Works()
+        public static void GetCronExpressionFromSchedule_Yearly_Works()
         {
             var schedule = new YearlyScheduleInUtc
                                {
                                    MonthsOfYear = new[] { MonthOfYear.April },
                                    DaysOfMonth = new[] { 20 },
                                    Hour = 1,
-                                   Minute = 38
+                                   Minute = 38,
                                };
             var cron = ScheduleCronExpressionConverter.ToCronExpression(schedule);
             Assert.Equal("38 1 20 4 *", cron);

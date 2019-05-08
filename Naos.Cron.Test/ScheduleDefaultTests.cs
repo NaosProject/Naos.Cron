@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ScheduleDefaultTests.cs" company="Naos">
-//   Copyright 2015 Naos
+// <copyright file="ScheduleDefaultTests.cs" company="Naos Project">
+//    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -11,31 +11,31 @@ namespace Naos.Cron.Test
 
     using Xunit;
 
-    public class ScheduleDefaultTests
+    public static class ScheduleDefaultTests
     {
         [Fact]
-        public void WeeklyScheduleInUtc_DefaultDayOfWeek_IsSunday()
+        public static void WeeklyScheduleInUtc_DefaultDayOfWeek_IsSunday()
         {
             var o = new WeeklyScheduleInUtc();
             Assert.Equal(DayOfWeek.Sunday, o.DaysOfWeek.Single());
         }
 
         [Fact]
-        public void MonthlyScheduleInUtc_DefaultDay_IsOne()
+        public static void MonthlyScheduleInUtc_DefaultDay_IsOne()
         {
             var o = new MonthlyScheduleInUtc();
             Assert.Equal(1, o.DaysOfMonth.Single());
         }
 
         [Fact]
-        public void YearlyScheduleInUtc_DefaultDay_IsOne()
+        public static void YearlyScheduleInUtc_DefaultDay_IsOne()
         {
             var o = new YearlyScheduleInUtc();
             Assert.Equal(1, o.DaysOfMonth.Single());
         }
 
         [Fact]
-        public void YearlyScheduleInUtc_DefaultYear_IsJanuary()
+        public static void YearlyScheduleInUtc_DefaultYear_IsJanuary()
         {
             var o = new YearlyScheduleInUtc();
             Assert.Equal(MonthOfYear.January, o.MonthsOfYear.Single());
