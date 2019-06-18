@@ -3,7 +3,7 @@
   <metadata>
     <id>Naos.Cron.Recipes.DummyFactory</id>
     <description>A dummy factory for Cron types.</description>
-    <tags>naos packaging fakeiteasy autofixture dummy factory</tags>
+    <tags>naos cron fakeiteasy autofixture dummy factory</tags>
     <dependencies>
       <dependency id="Naos.Cron" version ="$version$" />
       <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.113" />
