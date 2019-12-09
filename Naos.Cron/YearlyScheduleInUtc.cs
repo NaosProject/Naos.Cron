@@ -8,7 +8,7 @@ namespace Naos.Cron
 {
     using System;
     using System.Linq;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// Yearly on a specified month and a specified day in the month at a specified UTC time version of the schedule (will repeat on a specified month and a specified day in the month at a specified UTC time every year).
@@ -124,6 +124,6 @@ namespace Naos.Cron
         public override bool Equals(object obj) => this == (obj as YearlyScheduleInUtc);
 
         /// <inheritdoc />
-        public override int GetHashCode() => HashCodeHelper.Initialize().HashElements(this.MonthsOfYear).HashElements(this.DaysOfMonth).Hash(this.Hour).Hash(this.Minute).Value;
+        public override int GetHashCode() => HashCodeHelper.Initialize().Hash(this.MonthsOfYear).Hash(this.DaysOfMonth).Hash(this.Hour).Hash(this.Minute).Value;
     }
 }

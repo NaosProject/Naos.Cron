@@ -9,7 +9,7 @@ namespace Naos.Cron.Serialization.Json
     using System;
     using System.Collections.Generic;
     using Naos.Cron;
-    using Naos.Serialization.Json;
+    using OBeautifulCode.Serialization.Json;
 
     /// <summary>
     /// Implementation for the <see cref="Cron" /> domain.

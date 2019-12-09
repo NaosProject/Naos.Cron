@@ -11,8 +11,8 @@ namespace Naos.Cron.Test
     using Naos.Cron;
     using Naos.Cron.Serialization.Bson;
     using Naos.Cron.Serialization.Json;
-    using Naos.Serialization.Bson;
-    using Naos.Serialization.Json;
+    using OBeautifulCode.Serialization.Bson;
+    using OBeautifulCode.Serialization.Json;
     using Xunit;
 
     public static class SerializationTests
@@ -22,8 +22,8 @@ namespace Naos.Cron.Test
         {
             // Arrange
             var expected = default(ScheduleBase);
-            var bsonSerializer = new NaosBsonSerializer<CronBsonConfiguration>();
-            var jsonSerializer = new NaosJsonSerializer<CronJsonConfiguration>();
+            var bsonSerializer = new ObcBsonSerializer<CronBsonConfiguration>();
+            var jsonSerializer = new ObcJsonSerializer<CronJsonConfiguration>();
 
             // Act
             var actualBsonString = bsonSerializer.SerializeToString(expected);
@@ -42,8 +42,8 @@ namespace Naos.Cron.Test
         {
             // Arrange
             var expected = A.Dummy<ScheduleBase>();
-            var bsonSerializer = new NaosBsonSerializer<CronBsonConfiguration>();
-            var jsonSerializer = new NaosJsonSerializer<CronJsonConfiguration>();
+            var bsonSerializer = new ObcBsonSerializer<CronBsonConfiguration>();
+            var jsonSerializer = new ObcJsonSerializer<CronJsonConfiguration>();
 
             // Act
             var actualBsonString = bsonSerializer.SerializeToString(expected);

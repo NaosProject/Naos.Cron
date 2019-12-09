@@ -7,7 +7,7 @@
 namespace Naos.Cron
 {
     using System;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// Expression implementation of a schedule (serialized easily and converted into class version at any time).

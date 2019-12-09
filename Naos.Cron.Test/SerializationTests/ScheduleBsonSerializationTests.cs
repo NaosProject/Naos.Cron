@@ -8,13 +8,13 @@ namespace Naos.Cron.Test
 {
     using System;
     using Naos.Cron.Serialization.Bson;
-    using Naos.Serialization.Bson;
-    using Naos.Serialization.Domain;
+    using OBeautifulCode.Serialization;
+    using OBeautifulCode.Serialization.Bson;
     using Xunit;
 
     public class ScheduleBsonSerializationTests
     {
-        private readonly ISerializeAndDeserialize bsonSerializer = new NaosBsonSerializer<CronBsonConfiguration>();
+        private readonly ISerializeAndDeserialize bsonSerializer = new ObcBsonSerializer<CronBsonConfiguration>();
 
         [Fact]
         public void NullScheduleRoundtripWillDeserializeIntoBaseClass()

@@ -7,7 +7,7 @@
 namespace Naos.Cron
 {
     using System;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// Daily at a UTC time (hour/minute) version of the schedule (will repeat at the specified UTC time every day).

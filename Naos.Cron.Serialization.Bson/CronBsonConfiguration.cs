@@ -8,7 +8,7 @@ namespace Naos.Cron.Serialization.Bson
 {
     using System;
     using System.Collections.Generic;
-    using Naos.Serialization.Bson;
+    using OBeautifulCode.Serialization.Bson;
 
     /// <summary>
     /// Implementation for the <see cref="Cron" /> domain.

@@ -7,7 +7,7 @@
 namespace Naos.Cron
 {
     using System;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// Hourly on specified minute version of the schedule (will repeat every hour on the specified minute).

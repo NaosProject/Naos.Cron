@@ -8,7 +8,7 @@ namespace Naos.Cron
 {
     using System;
     using System.Linq;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// On a specific day of week at a specific UTC time version of the schedule (will repeat on the specified day of week at the specified UTC time every week).
@@ -98,6 +98,6 @@ namespace Naos.Cron
         public override bool Equals(object obj) => this == (obj as WeeklyScheduleInUtc);
 
         /// <inheritdoc />
-        public override int GetHashCode() => HashCodeHelper.Initialize().Hash(this.Hour).Hash(this.Minute).HashElements(this.DaysOfWeek).Value;
+        public override int GetHashCode() => HashCodeHelper.Initialize().Hash(this.Hour).Hash(this.Minute).Hash(this.DaysOfWeek).Value;
     }
 }

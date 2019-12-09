@@ -1,12 +1,12 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package>
   <metadata>
     <id>Naos.Cron.Recipes.DummyFactory</id>
     <description>A dummy factory for Cron types.</description>
     <tags>naos cron fakeiteasy autofixture dummy factory</tags>
     <dependencies>
-      <dependency id="Naos.Cron" version ="$version$" />
-      <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.113" />
+      <dependency id="Naos.Cron" version="$version$" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.125" />
     </dependencies>
   </metadata>
   <files>

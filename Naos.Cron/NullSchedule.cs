@@ -7,7 +7,7 @@
 namespace Naos.Cron
 {
     using System;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// Null implementation of a schedule (can be passed in without any consequences).

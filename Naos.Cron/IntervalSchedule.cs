@@ -7,7 +7,7 @@
 namespace Naos.Cron
 {
     using System;
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// Interval version of the schedule (will repeat every specified interval).
