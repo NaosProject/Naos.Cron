@@ -8,12 +8,12 @@ namespace Naos.Cron
 {
     using System;
     using System.Linq;
-    using OBeautifulCode.Equality.Recipes;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// On a specific day of week at a specific UTC time version of the schedule (will repeat on the specified day of week at the specified UTC time every week).
     /// </summary>
-    public class WeeklyScheduleInUtc : ScheduleBase, IEquatable<WeeklyScheduleInUtc>
+    public partial class WeeklyScheduleInUtc : ScheduleBase, IModelViaCodeGen
     {
         // this way the default will be Sunday NOT an invalid empty... (MUST be an array for serialization to properly overrite if specified)
         private DayOfWeek[] daysOfWeek = new[] { DayOfWeek.Sunday };
@@ -61,43 +61,5 @@ namespace Naos.Cron
                 throw new ArgumentException("The hour of the day cannot be more than 23.  It was " + this.Hour);
             }
         }
-
-        /// <summary>
-        /// Equality operator.
-        /// </summary>
-        /// <param name="first">First parameter.</param>
-        /// <param name="second">Second parameter.</param>
-        /// <returns>A value indicating whether or not the two items are equal.</returns>
-        public static bool operator ==(WeeklyScheduleInUtc first, WeeklyScheduleInUtc second)
-        {
-            if (ReferenceEquals(first, second))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(first, null) || ReferenceEquals(second, null))
-            {
-                return false;
-            }
-
-            return first.Hour == second.Hour && first.Minute == second.Minute && (first.DaysOfWeek ?? new DayOfWeek[0]).SequenceEqual(second.DaysOfWeek);
-        }
-
-        /// <summary>
-        /// Inequality operator.
-        /// </summary>
-        /// <param name="first">First parameter.</param>
-        /// <param name="second">Second parameter.</param>
-        /// <returns>A value indicating whether or not the two items are inequal.</returns>
-        public static bool operator !=(WeeklyScheduleInUtc first, WeeklyScheduleInUtc second) => !(first == second);
-
-        /// <inheritdoc />
-        public bool Equals(WeeklyScheduleInUtc other) => this == other;
-
-        /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as WeeklyScheduleInUtc);
-
-        /// <inheritdoc />
-        public override int GetHashCode() => HashCodeHelper.Initialize().Hash(this.Hour).Hash(this.Minute).Hash(this.DaysOfWeek).Value;
     }
 }

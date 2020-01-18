@@ -8,12 +8,13 @@ namespace Naos.Cron
 {
     using System;
     using System.ComponentModel;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Base class of the schedule for a recurring message sequence.
     /// </summary>
     [Bindable(BindableSupport.Default)]
-    public abstract class ScheduleBase : ICloneable
+    public abstract partial class ScheduleBase : IModelViaCodeGen
     {
         /// <summary>
         /// Checks to see if the schedule is valid (i.e. there aren't 61 minutes in an hour).
@@ -46,26 +47,6 @@ namespace Naos.Cron
         public string ToCronExpression()
         {
             var ret = ScheduleCronExpressionConverter.ToCronExpression(this);
-            return ret;
-        }
-
-        /// <inheritdoc />
-        public object Clone()
-        {
-            // special case for expression and null...
-            if (this.GetType() == typeof(NullSchedule))
-            {
-                return new NullSchedule();
-            }
-
-            if (this.GetType() == typeof(ExpressionSchedule))
-            {
-                var typed = (ExpressionSchedule)this;
-                return new ExpressionSchedule { CronExpression = typed.CronExpression };
-            }
-
-            var expression = ScheduleCronExpressionConverter.ToCronExpression(this);
-            var ret = ScheduleCronExpressionConverter.FromCronExpression(expression);
             return ret;
         }
     }
