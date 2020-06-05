@@ -11,6 +11,6 @@
   </metadata>
   <files>
     <file src="CronDummyFactory.cs" target="content\net462\.recipes\Naos.Cron\CronDummyFactory.cs" />
-    <file src="CronDummyFactory.cs" target="content\net462\.recipes\Naos.Cron\CronDummyFactory.designer.cs" />
+    <file src="CronDummyFactory.designer.cs" target="content\net462\.recipes\Naos.Cron\CronDummyFactory.designer.cs" />
   </files>
 </package>
