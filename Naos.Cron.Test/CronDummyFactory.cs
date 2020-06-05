@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Naos.Cron.Recipes
+namespace Naos.Cron.Test
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -22,7 +22,7 @@ namespace Naos.Cron.Recipes
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("Naos.Cron", "See package version number")]
 #endif
-    public class CronDummyFactory : IDummyFactory
+    public class CronDummyFactory : DefaultCronDummyFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CronDummyFactory"/> class.
@@ -50,7 +50,7 @@ namespace Naos.Cron.Recipes
                 {
                     var result = new ExpressionSchedule
                     {
-                        CronExpression = "* * * * *",
+                        CronExpression = "*/" + A.Dummy<int>().ThatIsInRange(1, 4) + " * * * *",
                     };
 
                     return result;
@@ -131,21 +131,6 @@ namespace Naos.Cron.Recipes
 
                     return result;
                 });
-        }
-
-        /// <inheritdoc />
-        public Priority Priority => new FakeItEasy.Priority(1);
-
-        /// <inheritdoc />
-        public bool CanCreate(Type type)
-        {
-            return false;
-        }
-
-        /// <inheritdoc />
-        public object Create(Type type)
-        {
-            return null;
         }
     }
 }

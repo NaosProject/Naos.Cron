@@ -14,7 +14,7 @@ namespace Naos.Cron.Test
 
     public class ScheduleJsonSerializationTests
     {
-        private readonly ISerializeAndDeserialize jsonSerializer = new ObcJsonSerializer<CronJsonConfiguration>();
+        private readonly ISerializeAndDeserialize jsonSerializer = new ObcJsonSerializer<CronJsonSerializationConfiguration>();
 
         [Fact]
         public void NullScheduleRoundtripWillDeserializeIntoBaseClass()

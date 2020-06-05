@@ -6,10 +6,11 @@
     <tags>naos cron fakeiteasy autofixture dummy factory</tags>
     <dependencies>
       <dependency id="Naos.Cron" version="$version$" />
-      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.125" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.127" />
     </dependencies>
   </metadata>
   <files>
     <file src="CronDummyFactory.cs" target="content\net462\.recipes\Naos.Cron\CronDummyFactory.cs" />
+    <file src="CronDummyFactory.cs" target="content\net462\.recipes\Naos.Cron\CronDummyFactory.designer.cs" />
   </files>
 </package>

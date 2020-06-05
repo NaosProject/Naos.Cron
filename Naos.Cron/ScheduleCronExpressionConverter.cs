@@ -37,7 +37,7 @@ namespace Naos.Cron
                 }
                 else
                 {
-                    return "*/" + intervalSchedule.Interval.TotalMinutes + " * * * *";
+                    return FormattableString.Invariant($"*/{intervalSchedule.Interval.TotalMinutes} * * * *");
                 }
             }
             else if (scheduleType == typeof(HourlySchedule))

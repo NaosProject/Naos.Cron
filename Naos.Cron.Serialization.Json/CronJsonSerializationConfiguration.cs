@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CronJsonConfiguration.cs" company="Naos Project">
+// <copyright file="CronJsonSerializationConfiguration.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,12 +15,12 @@ namespace Naos.Cron.Serialization.Json
     /// Implementation for the <see cref="Cron" /> domain.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cron", Justification = "Spelling/name is correct.")]
-    public class CronJsonConfiguration : JsonConfigurationBase
+    public class CronJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
         /// <inheritdoc />
-        protected override IReadOnlyCollection<Type> TypesToAutoRegister => new[]
+        protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
         {
-            typeof(ScheduleBase),
+            typeof(ScheduleBase).ToTypeToRegisterForJson(),
         };
     }
 }

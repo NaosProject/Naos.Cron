@@ -6,6 +6,7 @@
 
 namespace Naos.Cron.Test
 {
+    using System;
     using FakeItEasy;
     using FluentAssertions;
     using Naos.Cron;
@@ -22,8 +23,8 @@ namespace Naos.Cron.Test
         {
             // Arrange
             var expected = default(ScheduleBase);
-            var bsonSerializer = new ObcBsonSerializer<CronBsonConfiguration>();
-            var jsonSerializer = new ObcJsonSerializer<CronJsonConfiguration>();
+            var bsonSerializer = new ObcBsonSerializer<CronBsonSerializationConfiguration>();
+            var jsonSerializer = new ObcJsonSerializer<CronJsonSerializationConfiguration>();
 
             // Act
             var actualBsonString = bsonSerializer.SerializeToString(expected);
@@ -42,8 +43,8 @@ namespace Naos.Cron.Test
         {
             // Arrange
             var expected = A.Dummy<ScheduleBase>();
-            var bsonSerializer = new ObcBsonSerializer<CronBsonConfiguration>();
-            var jsonSerializer = new ObcJsonSerializer<CronJsonConfiguration>();
+            var bsonSerializer = new ObcBsonSerializer<CronBsonSerializationConfiguration>();
+            var jsonSerializer = new ObcJsonSerializer<CronJsonSerializationConfiguration>();
 
             // Act
             var actualBsonString = bsonSerializer.SerializeToString(expected);
@@ -56,5 +57,16 @@ namespace Naos.Cron.Test
             actualFromBsonString.Should().Be(expected);
             actualFromJsonString.Should().Be(expected);
         }
+    }
+
+    public static class SerializationConfigurationTypes
+    {
+        public static BsonSerializationConfigurationType BsonSerializationConfigurationType => typeof(CronBsonSerializationConfiguration).ToBsonSerializationConfigurationType();
+
+        public static JsonSerializationConfigurationType JsonSerializationConfigurationType => typeof(CronJsonSerializationConfiguration).ToJsonSerializationConfigurationType();
+
+        public static BsonSerializationConfigurationType BsonConfigurationType => typeof(CronBsonSerializationConfiguration).ToBsonSerializationConfigurationType();
+
+        public static JsonSerializationConfigurationType JsonConfigurationType => typeof(CronJsonSerializationConfiguration).ToJsonSerializationConfigurationType();
     }
 }
