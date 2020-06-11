@@ -18,6 +18,12 @@ namespace Naos.Cron.Serialization.Json
     public class CronJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters => new[]
+                                                                                               {
+                                                                                                   typeof(ScheduleBase).Namespace,
+                                                                                               };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
         {
             typeof(ScheduleBase).ToTypeToRegisterForJson(),

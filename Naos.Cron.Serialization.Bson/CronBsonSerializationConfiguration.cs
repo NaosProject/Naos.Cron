@@ -17,6 +17,12 @@ namespace Naos.Cron.Serialization.Bson
     public class CronBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters => new[]
+                                                                                               {
+                                                                                                   typeof(ScheduleBase).Namespace,
+                                                                                               };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
         {
             typeof(ScheduleBase).ToTypeToRegisterForBson(),
