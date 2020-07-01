@@ -36,7 +36,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         private readonly List<Lazy<StringRepresentationTestScenario<T>>> scenarios = new List<Lazy<StringRepresentationTestScenario<T>>>();
 
         /// <summary>
-        /// Adds the specified scenarios to the list of scenarios.
+        /// Adds the specified scenario to the list of scenarios.
         /// </summary>
         /// <param name="scenario">The scenario to add.</param>
         /// <returns>
@@ -53,7 +53,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         }
 
         /// <summary>
-        /// Adds the specified scenarios to the list of scenarios.
+        /// Adds the specified scenario to the list of scenarios.
         /// </summary>
         /// <param name="scenarioFunc">A func that returns the scenario to add.</param>
         /// <returns>
@@ -69,6 +69,26 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
                 var lazyScenario = new Lazy<StringRepresentationTestScenario<T>>(scenarioFunc);
 
                 this.scenarios.Add(lazyScenario);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the specified scenarios to the list of scenarios.
+        /// </summary>
+        /// <param name="stringRepresentationTestScenarios">The scenarios to add.</param>
+        /// <returns>
+        /// This object.
+        /// </returns>
+        public StringRepresentationTestScenarios<T> AddScenarios(
+            StringRepresentationTestScenarios<T> stringRepresentationTestScenarios)
+        {
+            new { stringRepresentationTestScenarios }.AsTest().Must().NotBeNull();
+
+            lock (this.lockScenarios)
+            {
+                this.scenarios.AddRange(stringRepresentationTestScenarios.scenarios);
             }
 
             return this;

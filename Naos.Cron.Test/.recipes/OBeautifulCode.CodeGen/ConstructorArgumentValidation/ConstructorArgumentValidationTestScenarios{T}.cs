@@ -36,7 +36,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         private readonly List<Lazy<ConstructorArgumentValidationTestScenario<T>>> scenarios = new List<Lazy<ConstructorArgumentValidationTestScenario<T>>>();
 
         /// <summary>
-        /// Adds the specified scenarios to the list of scenarios.
+        /// Adds the specified scenario to the list of scenarios.
         /// </summary>
         /// <param name="scenario">The scenario to add.</param>
         /// <returns>
@@ -53,7 +53,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         }
 
         /// <summary>
-        /// Adds the specified scenarios to the list of scenarios.
+        /// Adds the specified scenario to the list of scenarios.
         /// </summary>
         /// <param name="scenarioFunc">A func that returns the scenario to add.</param>
         /// <returns>
@@ -74,6 +74,26 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
                 var lazyScenario = new Lazy<ConstructorArgumentValidationTestScenario<T>>(scenarioFunc);
 
                 this.scenarios.Add(lazyScenario);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the specified scenarios to the list of scenarios.
+        /// </summary>
+        /// <param name="constructorArgumentValidationTestScenarios">The scenarios to add.</param>
+        /// <returns>
+        /// This object.
+        /// </returns>
+        public ConstructorArgumentValidationTestScenarios<T> AddScenarios(
+            ConstructorArgumentValidationTestScenarios<T> constructorArgumentValidationTestScenarios)
+        {
+            new { constructorArgumentValidationTestScenarios }.AsTest().Must().NotBeNull();
+
+            lock (this.lockScenarios)
+            {
+                this.scenarios.AddRange(constructorArgumentValidationTestScenarios.scenarios);
             }
 
             return this;

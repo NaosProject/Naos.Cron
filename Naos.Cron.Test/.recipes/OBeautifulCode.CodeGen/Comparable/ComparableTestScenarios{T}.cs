@@ -36,7 +36,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         private readonly List<Lazy<ComparableTestScenario<T>>> scenarios = new List<Lazy<ComparableTestScenario<T>>>();
 
         /// <summary>
-        /// Adds the specified scenarios to the list of scenarios.
+        /// Adds the specified scenario to the list of scenarios.
         /// </summary>
         /// <param name="scenario">The scenario to add.</param>
         /// <returns>
@@ -53,7 +53,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         }
 
         /// <summary>
-        /// Adds the specified scenarios to the list of scenarios.
+        /// Adds the specified scenario to the list of scenarios.
         /// </summary>
         /// <param name="scenarioFunc">A func that returns the scenario to add.</param>
         /// <returns>
@@ -69,6 +69,26 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
                 var lazyScenario = new Lazy<ComparableTestScenario<T>>(scenarioFunc);
 
                 this.scenarios.Add(lazyScenario);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the specified scenarios to the list of scenarios.
+        /// </summary>
+        /// <param name="comparableTestScenarios">The scenarios to add.</param>
+        /// <returns>
+        /// This object.
+        /// </returns>
+        public ComparableTestScenarios<T> AddScenarios(
+            ComparableTestScenarios<T> comparableTestScenarios)
+        {
+            new { comparableTestScenarios }.AsTest().Must().NotBeNull();
+
+            lock (this.lockScenarios)
+            {
+                this.scenarios.AddRange(comparableTestScenarios.scenarios);
             }
 
             return this;
