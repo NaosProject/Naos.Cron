@@ -11,8 +11,6 @@ namespace OBeautifulCode.Reflection.Recipes
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     /// <summary>
     /// A wrapper for an <see cref="AppDomain"/> that implements <see cref="IDisposable"/>.
     /// </summary>
@@ -35,7 +33,10 @@ namespace OBeautifulCode.Reflection.Recipes
         public DisposableAppDomain(
             AppDomain appDomain)
         {
-            new { appDomain }.AsArg().Must().NotBeNull();
+            if (appDomain == null)
+            {
+                throw new ArgumentNullException(nameof(appDomain));
+            }
 
             this.AppDomain = appDomain;
         }

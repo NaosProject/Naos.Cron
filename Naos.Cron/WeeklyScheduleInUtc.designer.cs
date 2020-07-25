@@ -93,6 +93,7 @@ namespace Naos.Cron
         /// </summary>
         /// <param name="daysOfWeek">The new <see cref="DaysOfWeek" />.  This object will NOT be deep cloned; it is used as-is.</param>
         /// <returns>New <see cref="WeeklyScheduleInUtc" /> using the specified <paramref name="daysOfWeek" /> for <see cref="DaysOfWeek" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "daysOfWeek")]
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]

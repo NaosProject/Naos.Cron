@@ -13,8 +13,6 @@ namespace OBeautifulCode.Reflection.Recipes
     using System.Diagnostics.CodeAnalysis;
     using System.Security.Policy;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     /// <summary>
     /// Provides useful methods for creating and executing code within an <see cref="AppDomain"/>.
     /// </summary>
@@ -67,7 +65,10 @@ namespace OBeautifulCode.Reflection.Recipes
         public static void ExecuteInNewAppDomain(
             this Action action)
         {
-            new { action }.AsArg().Must().NotBeNull();
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             using (var disposableAppDomain = CreateDisposableAppDomain())
             {
@@ -84,8 +85,15 @@ namespace OBeautifulCode.Reflection.Recipes
             this Action action,
             DisposableAppDomain disposableAppDomain)
         {
-            new { action }.AsArg().Must().NotBeNull();
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
 
             disposableAppDomain.Execute(action);
         }
@@ -99,8 +107,15 @@ namespace OBeautifulCode.Reflection.Recipes
             this DisposableAppDomain disposableAppDomain,
             Action action)
         {
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
-            new { action }.AsArg().Must().NotBeNull();
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             var domainDelegate = disposableAppDomain.BuildAppDomainDelegate();
 
@@ -117,7 +132,10 @@ namespace OBeautifulCode.Reflection.Recipes
             this Action<T> action,
             T parameter)
         {
-            new { action }.AsArg().Must().NotBeNull();
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             using (var disposableAppDomain = CreateDisposableAppDomain())
             {
@@ -137,8 +155,15 @@ namespace OBeautifulCode.Reflection.Recipes
             T parameter,
             DisposableAppDomain disposableAppDomain)
         {
-            new { action }.AsArg().Must().NotBeNull();
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
 
             disposableAppDomain.Execute(action, parameter);
         }
@@ -155,8 +180,15 @@ namespace OBeautifulCode.Reflection.Recipes
             Action<T> action,
             T parameter)
         {
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
-            new { action }.AsArg().Must().NotBeNull();
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             var domainDelegate = disposableAppDomain.BuildAppDomainDelegate();
 
@@ -174,7 +206,10 @@ namespace OBeautifulCode.Reflection.Recipes
         public static TResult ExecuteInNewAppDomain<TResult>(
             this Func<TResult> func)
         {
-            new { func }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             using (var disposableAppDomain = CreateDisposableAppDomain())
             {
@@ -197,8 +232,15 @@ namespace OBeautifulCode.Reflection.Recipes
             this Func<TResult> func,
             DisposableAppDomain disposableAppDomain)
         {
-            new { func }.AsArg().Must().NotBeNull();
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
 
             var result = disposableAppDomain.Execute(func);
 
@@ -218,8 +260,15 @@ namespace OBeautifulCode.Reflection.Recipes
             this DisposableAppDomain disposableAppDomain,
             Func<TResult> func)
         {
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
-            new { func }.AsArg().Must().NotBeNull();
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
+
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             var domainDelegate = disposableAppDomain.BuildAppDomainDelegate();
 
@@ -242,7 +291,10 @@ namespace OBeautifulCode.Reflection.Recipes
             this Func<T, TResult> func,
             T parameter)
         {
-            new { func }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             using (var disposableAppDomain = CreateDisposableAppDomain())
             {
@@ -268,8 +320,15 @@ namespace OBeautifulCode.Reflection.Recipes
             T parameter,
             DisposableAppDomain disposableAppDomain)
         {
-            new { func }.AsArg().Must().NotBeNull();
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
 
             var result = disposableAppDomain.Execute(func, parameter);
 
@@ -292,8 +351,15 @@ namespace OBeautifulCode.Reflection.Recipes
             Func<T, TResult> func,
             T parameter)
         {
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
-            new { func }.AsArg().Must().NotBeNull();
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
+
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             var domainDelegate = disposableAppDomain.BuildAppDomainDelegate();
 
@@ -319,7 +385,10 @@ namespace OBeautifulCode.Reflection.Recipes
             T1 parameter1,
             T2 parameter2)
         {
-            new { func }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             using (var disposableAppDomain = CreateDisposableAppDomain())
             {
@@ -348,8 +417,15 @@ namespace OBeautifulCode.Reflection.Recipes
             T2 parameter2,
             DisposableAppDomain disposableAppDomain)
         {
-            new { func }.AsArg().Must().NotBeNull();
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
 
             var result = disposableAppDomain.Execute(func, parameter1, parameter2);
 
@@ -375,8 +451,15 @@ namespace OBeautifulCode.Reflection.Recipes
             T1 parameter1,
             T2 parameter2)
         {
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
-            new { func }.AsArg().Must().NotBeNull();
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
+
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             var domainDelegate = disposableAppDomain.BuildAppDomainDelegate();
 
@@ -405,7 +488,10 @@ namespace OBeautifulCode.Reflection.Recipes
             T2 parameter2,
             T3 parameter3)
         {
-            new { func }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             using (var disposableAppDomain = CreateDisposableAppDomain())
             {
@@ -437,8 +523,15 @@ namespace OBeautifulCode.Reflection.Recipes
             T3 parameter3,
             DisposableAppDomain disposableAppDomain)
         {
-            new { func }.AsArg().Must().NotBeNull();
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
 
             var result = disposableAppDomain.Execute(func, parameter1, parameter2, parameter3);
 
@@ -467,8 +560,15 @@ namespace OBeautifulCode.Reflection.Recipes
             T2 parameter2,
             T3 parameter3)
         {
-            new { disposableAppDomain }.AsArg().Must().NotBeNull();
-            new { func }.AsArg().Must().NotBeNull();
+            if (disposableAppDomain == null)
+            {
+                throw new ArgumentNullException(nameof(disposableAppDomain));
+            }
+
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
 
             var domainDelegate = disposableAppDomain.BuildAppDomainDelegate();
 

@@ -13,8 +13,6 @@ namespace OBeautifulCode.Collection.Recipes
     using System.Collections;
     using System.Collections.Generic;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     /// <summary>
     /// Helper methods for operating on objects of type <see cref="ICollection{T}"/>.
     /// </summary>
@@ -42,12 +40,16 @@ namespace OBeautifulCode.Collection.Recipes
             this ICollection<T> collection,
             IEnumerable<T> valuesToAdd)
         {
-            new { collection }.AsArg().Must().NotBeNull();
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
 
-            // ReSharper disable once PossibleMultipleEnumeration
-            new { valuesToAdd }.AsArg().Must().NotBeNull();
+            if (valuesToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(valuesToAdd));
+            }
 
-            // ReSharper disable once PossibleMultipleEnumeration
             foreach (var item in valuesToAdd)
             {
                 collection.Add(item);
