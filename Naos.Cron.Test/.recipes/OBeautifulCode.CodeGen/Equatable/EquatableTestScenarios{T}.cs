@@ -9,21 +9,21 @@
 
 namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
-    using System;
-    using System.Collections.Generic;
+    using global::System;
+    using global::System.Collections.Generic;
 
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type.Recipes;
 
-    using static System.FormattableString;
+    using static global::System.FormattableString;
 
     /// <summary>
     /// Specifies various scenarios for equality tests.
     /// </summary>
     /// <typeparam name="T">The type of the object being tested.</typeparam>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public

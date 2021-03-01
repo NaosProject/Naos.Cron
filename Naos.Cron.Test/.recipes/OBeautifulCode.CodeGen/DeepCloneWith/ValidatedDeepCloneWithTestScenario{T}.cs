@@ -9,20 +9,21 @@
 
 namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
+    using global::System;
+    using global::System.Linq;
+    using global::System.Reflection;
 
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Reflection.Recipes;
     using OBeautifulCode.Type.Recipes;
 
     /// <summary>
     /// Specifies a scenario for testing DeepCloneWith methods.
     /// </summary>
     /// <typeparam name="T">The type of the object being tested.</typeparam>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public
@@ -59,7 +60,9 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
                 new { systemUnderTest }.AsTest().Must().NotBeNull(id);
 
                 var deepCloneWithMethodName = "DeepCloneWith" + withPropertyName;
-                deepCloneWithMethod = typeof(T).GetMethods(BindingFlags.Public | BindingFlags.Instance).SingleOrDefault(_ => _.Name == deepCloneWithMethodName);
+
+                deepCloneWithMethod = typeof(T).GetMethodFiltered(deepCloneWithMethodName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public, throwIfNotFound: false);
+
                 new { deepCloneWithMethod }.AsTest().Must().NotBeNull(id);
 
                 // ReSharper disable once PossibleNullReferenceException
@@ -81,7 +84,8 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
                     new { withValueTypeIsAssignableToDeepCloneWithMethodParameterType }.AsTest().Must().BeTrue(id);
                 }
 
-                var withProperty = typeof(T).GetProperty(withPropertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+                var withProperty = typeof(T).GetPropertyFiltered(withPropertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public, throwIfNotFound: false);
+
                 new { withProperty }.Must().NotBeNull(id);
             }
 

@@ -9,14 +9,14 @@
 
 namespace OBeautifulCode.Reflection.Recipes
 {
-    using System;
+    using global::System;
 
     /// <summary>
     /// A wrapper for an <see cref="AppDomain"/> that implements <see cref="IDisposable"/>.
     /// </summary>
-#if !OBeautifulCodeReflectionRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Reflection.Recipes", "See package version number")]
+#if !OBeautifulCodeReflectionSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Reflection.Recipes", "See package version number")]
     internal
 #else
     public

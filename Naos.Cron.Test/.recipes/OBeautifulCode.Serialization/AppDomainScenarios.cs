@@ -9,17 +9,17 @@
 
 namespace OBeautifulCode.Serialization.Recipes
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
+    using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Serialization.Recipes.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Specifies various scenarios of serializing and de-serializing in the current App Domain or a new App Domain.
     /// </summary>
     [Flags]
-#if !OBeautifulCodeSerializationRecipesProject
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Serialization.Recipes", "See package version number")]
+#if !OBeautifulCodeSerializationSolution
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Serialization.Recipes", "See package version number")]
     internal
 #else
     public

@@ -9,7 +9,7 @@
 
 namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
-    using System.Collections.Generic;
+    using global::System.Collections.Generic;
 
     using OBeautifulCode.Assertion.Recipes;
 
@@ -17,9 +17,9 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
     /// Specifies a scenario for comparability tests.
     /// </summary>
     /// <typeparam name="T">The type of the object being tested.</typeparam>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public
@@ -82,7 +82,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         /// Gets objects that are less than the <see cref="ReferenceObject"/>.
         /// </summary>
         public IReadOnlyList<T> ObjectsThatAreLessThanReferenceObject { get; }
-        
+
         /// <summary>
         /// Gets objects that are greater than the <see cref="ReferenceObject"/>.
         /// </summary>

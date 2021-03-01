@@ -9,9 +9,9 @@
 
 namespace OBeautifulCode.Reflection.Recipes
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Security.Policy;
+    using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
+    using global::System.Security.Policy;
 
     /// <summary>
     /// Provides useful methods for creating and executing code within an <see cref="AppDomain"/>.
@@ -19,9 +19,9 @@ namespace OBeautifulCode.Reflection.Recipes
     /// <remarks>
     /// Adapted from <a href="https://malvinly.com/2012/04/08/executing-code-in-a-new-application-domain/" />.
     /// </remarks>
-#if !OBeautifulCodeReflectionRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Reflection.Recipes", "See package version number")]
+#if !OBeautifulCodeReflectionSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.Reflection.Recipes", "See package version number")]
     internal
 #else
     public
@@ -576,7 +576,7 @@ namespace OBeautifulCode.Reflection.Recipes
 
             return result;
         }
-        
+
         private static AppDomainDelegate BuildAppDomainDelegate(
             this DisposableAppDomain disposableAppDomain)
         {

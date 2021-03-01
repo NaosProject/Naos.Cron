@@ -9,19 +9,18 @@
 
 namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.Serialization;
+    using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.CodeGen.ModelObject.Recipes.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Specifies a scenario for testing when a constructor sets a property values.
     /// </summary>
     /// <typeparam name="T">The type of the object being tested.</typeparam>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public
@@ -75,9 +74,9 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
     /// <summary>
     /// Contains constants related to testing when a constructor sets a property values.
     /// </summary>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public
@@ -88,7 +87,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
         /// The name of the property to use to force the scenario to pass.
         /// </summary>
         public const string ForceGeneratedTestsToPassAndWriteMyOwnScenarioPropertyName = "ForceGeneratedTestsToPassAndWriteMyOwnScenarioPropertyName";
-        
+
         /// <summary>
         /// The name of the property to use when no properties are assigned in the constructor.
         /// </summary>

@@ -12,8 +12,8 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
     /// <summary>
     /// Specifies how to compare an actual object to an expected object.
     /// </summary>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public

@@ -9,19 +9,19 @@
 
 namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.Serialization;
+    using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
+    using global::System.Runtime.Serialization;
 
-    using OBeautifulCode.CodeGen.ModelObject.Recipes.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Specifies a scenario for string representation tests.
     /// </summary>
     /// <typeparam name="T">The type of the object being tested.</typeparam>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public

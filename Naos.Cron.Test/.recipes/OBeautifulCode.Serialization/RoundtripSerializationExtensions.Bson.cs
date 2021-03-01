@@ -9,13 +9,13 @@
 
 namespace OBeautifulCode.Serialization.Recipes
 {
-    using System;
-    using System.Collections.Generic;
+    using global::System;
+    using global::System.Collections.Generic;
 
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Serialization.Bson;
 
-#if !OBeautifulCodeSerializationRecipesProject
+#if !OBeautifulCodeSerializationSolution
     internal
 #else
     public

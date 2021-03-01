@@ -9,19 +9,20 @@
 
 namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
+    using global::System;
+    using global::System.Linq;
+    using global::System.Reflection;
 
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Reflection.Recipes;
 
     /// <summary>
     /// Specifies a scenario for testing when a constructor sets a property values.
     /// </summary>
     /// <typeparam name="T">The type of the object being tested.</typeparam>
-#if !OBeautifulCodeCodeGenRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
+#if !OBeautifulCodeCodeGenSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject.Recipes", "See package version number")]
     internal
 #else
     public
@@ -63,7 +64,8 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
 
                 expectedPropertyValue = systemUnderTestExpectedPropertyValue.ExpectedPropertyValue;
 
-                property = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).SingleOrDefault(_ => _.Name == propertyName);
+                property = typeof(T).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public, throwIfNotFound: false);
+
                 new { property }.AsTest().Must().NotBeNull(id);
 
                 if (compareActualToExpectedUsing == CompareActualToExpectedUsing.DefaultStrategy)
@@ -82,7 +84,7 @@ namespace OBeautifulCode.CodeGen.ModelObject.Recipes
                     }
                 }
             }
-            
+
             this.Id = id;
             this.PropertyName = propertyName;
             this.SystemUnderTest = systemUnderTest;
