@@ -22,7 +22,12 @@ namespace Naos.Cron.Test
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("Naos.Cron", "See package version number")]
 #endif
-    public class CronDummyFactory : DefaultCronDummyFactory
+#if !NaosCronSolution
+    internal
+#else
+    public
+#endif
+    partial class CronDummyFactory : DefaultCronDummyFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CronDummyFactory"/> class.
