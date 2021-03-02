@@ -75,8 +75,8 @@
     <Reference Include="Naos.Protocol.Serialization.Json, Version=1.0.96.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naos.Protocol.Serialization.Json.1.0.96\lib\net462\Naos.Protocol.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.132.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.132\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
+    <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.133.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.133\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Compression, Version=1.0.20.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Compression.1.0.20\lib\net462\OBeautifulCode.Compression.dll</HintPath>
