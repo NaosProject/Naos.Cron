@@ -122,7 +122,7 @@ namespace Naos.Cron
         {
             var result = new ExpressionSchedule
                              {
-                                 CronExpression = this.CronExpression?.DeepClone(),
+                                 CronExpression = (string)this.CronExpression?.Clone(),
                              };
 
             return result;
