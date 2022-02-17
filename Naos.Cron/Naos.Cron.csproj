@@ -117,6 +117,7 @@
       <DependentUpon>MonthlyScheduleInUtc.cs</DependentUpon>
     </Compile>
     <Compile Include="MonthOfYear.cs" />
+    <Compile Include="ISchedule.cs" />
     <Compile Include="NullSchedule.cs" />
     <Compile Include="NullSchedule.designer.cs">
       <DependentUpon>NullSchedule.cs</DependentUpon>
