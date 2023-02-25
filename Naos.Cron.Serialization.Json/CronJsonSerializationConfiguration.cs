@@ -26,6 +26,7 @@ namespace Naos.Cron.Serialization.Json
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
         {
+            typeof(ISchedule).ToTypeToRegisterForJson(),
             typeof(ScheduleBase).ToTypeToRegisterForJson(),
         };
     }

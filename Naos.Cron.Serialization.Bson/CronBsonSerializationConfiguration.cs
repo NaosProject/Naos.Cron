@@ -25,6 +25,7 @@ namespace Naos.Cron.Serialization.Bson
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
         {
+            typeof(ISchedule).ToTypeToRegisterForBson(),
             typeof(ScheduleBase).ToTypeToRegisterForBson(),
         };
     }
