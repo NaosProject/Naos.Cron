@@ -33,96 +33,69 @@ namespace Naos.Cron.Test
 
     using static global::System.FormattableString;
 
-    public static partial class DailyScheduleInUtcTest
+    public static partial class SpecificDateTimeScheduleInUtcTest
     {
-        private static readonly StringRepresentationTestScenarios<DailyScheduleInUtc> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<DailyScheduleInUtc>()
+        private static readonly StringRepresentationTestScenarios<SpecificDateTimeScheduleInUtc> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<SpecificDateTimeScheduleInUtc>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<DailyScheduleInUtc>
+                new StringRepresentationTestScenario<SpecificDateTimeScheduleInUtc>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<DailyScheduleInUtc>();
+                        var systemUnderTest = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<DailyScheduleInUtc>
+                        var result = new SystemUnderTestExpectedStringRepresentation<SpecificDateTimeScheduleInUtc>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Cron.DailyScheduleInUtc: Hour = {systemUnderTest.Hour.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Minute = {systemUnderTest.Minute.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Cron.SpecificDateTimeScheduleInUtc: SpecificDateTimeInUtc = {systemUnderTest.SpecificDateTimeInUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly DeepCloneWithTestScenarios<DailyScheduleInUtc> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<DailyScheduleInUtc>()
+        private static readonly DeepCloneWithTestScenarios<SpecificDateTimeScheduleInUtc> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<SpecificDateTimeScheduleInUtc>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<DailyScheduleInUtc>
+                new DeepCloneWithTestScenario<SpecificDateTimeScheduleInUtc>
                 {
-                    Name = "DeepCloneWithHour should deep clone object and replace Hour with the provided hour",
-                    WithPropertyName = "Hour",
+                    Name = "DeepCloneWithSpecificDateTimeInUtc should deep clone object and replace SpecificDateTimeInUtc with the provided specificDateTimeInUtc",
+                    WithPropertyName = "SpecificDateTimeInUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<DailyScheduleInUtc>();
+                        var systemUnderTest = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
-                        var referenceObject = A.Dummy<DailyScheduleInUtc>().ThatIs(_ => !systemUnderTest.Hour.IsEqualTo(_.Hour));
+                        var referenceObject = A.Dummy<SpecificDateTimeScheduleInUtc>().ThatIs(_ => !systemUnderTest.SpecificDateTimeInUtc.IsEqualTo(_.SpecificDateTimeInUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<DailyScheduleInUtc>
+                        var result = new SystemUnderTestDeepCloneWithValue<SpecificDateTimeScheduleInUtc>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Hour,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<DailyScheduleInUtc>
-                {
-                    Name = "DeepCloneWithMinute should deep clone object and replace Minute with the provided minute",
-                    WithPropertyName = "Minute",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<DailyScheduleInUtc>();
-
-                        var referenceObject = A.Dummy<DailyScheduleInUtc>().ThatIs(_ => !systemUnderTest.Minute.IsEqualTo(_.Minute));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<DailyScheduleInUtc>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Minute,
+                            DeepCloneWithValue = referenceObject.SpecificDateTimeInUtc,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly DailyScheduleInUtc ReferenceObjectForEquatableTestScenarios = A.Dummy<DailyScheduleInUtc>();
+        private static readonly SpecificDateTimeScheduleInUtc ReferenceObjectForEquatableTestScenarios = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
-        private static readonly EquatableTestScenarios<DailyScheduleInUtc> EquatableTestScenarios = new EquatableTestScenarios<DailyScheduleInUtc>()
+        private static readonly EquatableTestScenarios<SpecificDateTimeScheduleInUtc> EquatableTestScenarios = new EquatableTestScenarios<SpecificDateTimeScheduleInUtc>()
             .AddScenario(() =>
-                new EquatableTestScenario<DailyScheduleInUtc>
+                new EquatableTestScenario<SpecificDateTimeScheduleInUtc>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new DailyScheduleInUtc[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new SpecificDateTimeScheduleInUtc[]
                     {
-                        new DailyScheduleInUtc
+                        new SpecificDateTimeScheduleInUtc
                             {
-                                Hour   = ReferenceObjectForEquatableTestScenarios.Hour,
-                                Minute = ReferenceObjectForEquatableTestScenarios.Minute,
+                                SpecificDateTimeInUtc = ReferenceObjectForEquatableTestScenarios.SpecificDateTimeInUtc,
                             },
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new DailyScheduleInUtc[]
+                    ObjectsThatAreNotEqualToReferenceObject = new SpecificDateTimeScheduleInUtc[]
                     {
-                        new DailyScheduleInUtc
+                        new SpecificDateTimeScheduleInUtc
                             {
-                                Hour   = A.Dummy<DailyScheduleInUtc>().Whose(_ => !_.Hour.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Hour)).Hour,
-                                Minute = ReferenceObjectForEquatableTestScenarios.Minute,
-                            },
-                        new DailyScheduleInUtc
-                            {
-                                Hour   = ReferenceObjectForEquatableTestScenarios.Hour,
-                                Minute = A.Dummy<DailyScheduleInUtc>().Whose(_ => !_.Minute.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Minute)).Minute,
+                                SpecificDateTimeInUtc = A.Dummy<SpecificDateTimeScheduleInUtc>().Whose(_ => !_.SpecificDateTimeInUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.SpecificDateTimeInUtc)).SpecificDateTimeInUtc,
                             },
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -132,12 +105,12 @@ namespace Naos.Cron.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<DailyScheduleInUtc>(),
                         A.Dummy<ExpressionSchedule>(),
                         A.Dummy<HourlySchedule>(),
                         A.Dummy<IntervalSchedule>(),
                         A.Dummy<MonthlyScheduleInUtc>(),
                         A.Dummy<NullSchedule>(),
-                        A.Dummy<SpecificDateTimeScheduleInUtc>(),
                         A.Dummy<WeeklyScheduleInUtc>(),
                         A.Dummy<YearlyScheduleInUtc>(),
                     },
@@ -161,12 +134,12 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void DailyScheduleInUtc___Should_implement_IModel_of_DailyScheduleInUtc___When_reflecting()
+            public static void SpecificDateTimeScheduleInUtc___Should_implement_IModel_of_SpecificDateTimeScheduleInUtc___When_reflecting()
             {
                 // Arrange
-                var type = typeof(DailyScheduleInUtc);
+                var type = typeof(SpecificDateTimeScheduleInUtc);
 
-                var expectedModelMethods = typeof(IModel<DailyScheduleInUtc>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<SpecificDateTimeScheduleInUtc>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -176,7 +149,7 @@ namespace Naos.Cron.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<DailyScheduleInUtc>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<SpecificDateTimeScheduleInUtc>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -194,10 +167,10 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void DailyScheduleInUtc___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void SpecificDateTimeScheduleInUtc___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(DailyScheduleInUtc);
+                var type = typeof(SpecificDateTimeScheduleInUtc);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -261,10 +234,10 @@ namespace Naos.Cron.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<DailyScheduleInUtc>();
+                var systemUnderTest = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
                 // Act
-                var actual = (DailyScheduleInUtc)systemUnderTest.Clone();
+                var actual = (SpecificDateTimeScheduleInUtc)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -288,7 +261,7 @@ namespace Naos.Cron.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<DailyScheduleInUtc>();
+                var systemUnderTest = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -314,7 +287,7 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Hour", "Minute" };
+                var propertyNames = new string[] { "SpecificDateTimeInUtc" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -327,12 +300,12 @@ namespace Naos.Cron.Test
                     }
 
                     // Act
-                    var actual = (DailyScheduleInUtc)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (SpecificDateTimeScheduleInUtc)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(DailyScheduleInUtc).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(SpecificDateTimeScheduleInUtc).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -394,7 +367,7 @@ namespace Naos.Cron.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<DailyScheduleInUtc>();
+                var expected = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -423,7 +396,7 @@ namespace Naos.Cron.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<DailyScheduleInUtc>();
+                var expected = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -452,7 +425,7 @@ namespace Naos.Cron.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<DailyScheduleInUtc>();
+                var expected = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -481,7 +454,7 @@ namespace Naos.Cron.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<DailyScheduleInUtc>();
+                var expected = A.Dummy<SpecificDateTimeScheduleInUtc>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -515,8 +488,8 @@ namespace Naos.Cron.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                DailyScheduleInUtc systemUnderTest1 = null;
-                DailyScheduleInUtc systemUnderTest2 = null;
+                SpecificDateTimeScheduleInUtc systemUnderTest1 = null;
+                SpecificDateTimeScheduleInUtc systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -546,7 +519,7 @@ namespace Naos.Cron.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    DailyScheduleInUtc systemUnderTest = null;
+                    SpecificDateTimeScheduleInUtc systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -695,8 +668,8 @@ namespace Naos.Cron.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                DailyScheduleInUtc systemUnderTest1 = null;
-                DailyScheduleInUtc systemUnderTest2 = null;
+                SpecificDateTimeScheduleInUtc systemUnderTest1 = null;
+                SpecificDateTimeScheduleInUtc systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -726,7 +699,7 @@ namespace Naos.Cron.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    DailyScheduleInUtc systemUnderTest = null;
+                    SpecificDateTimeScheduleInUtc systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1015,14 +988,14 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_DailyScheduleInUtc___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_SpecificDateTimeScheduleInUtc___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    DailyScheduleInUtc systemUnderTest = null;
+                    SpecificDateTimeScheduleInUtc systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1046,7 +1019,7 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_DailyScheduleInUtc___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_SpecificDateTimeScheduleInUtc___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1074,7 +1047,7 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_DailyScheduleInUtc___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_SpecificDateTimeScheduleInUtc___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1102,7 +1075,7 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_DailyScheduleInUtc___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_SpecificDateTimeScheduleInUtc___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1130,7 +1103,7 @@ namespace Naos.Cron.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_DailyScheduleInUtc___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_SpecificDateTimeScheduleInUtc___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

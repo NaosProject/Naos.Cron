@@ -95,6 +95,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="SpecificDateTimeScheduleInUtc.cs" />
     <Compile Include="DailyScheduleInUtc.cs" />
     <Compile Include="DailyScheduleInUtc.designer.cs">
       <DependentUpon>DailyScheduleInUtc.cs</DependentUpon>
@@ -128,6 +129,9 @@
       <DependentUpon>ScheduleBase.cs</DependentUpon>
     </Compile>
     <Compile Include="ScheduleCronExpressionConverter.cs" />
+    <Compile Include="SpecificDateTimeScheduleInUtc.designer.cs">
+      <DependentUpon>SpecificDateTimeScheduleInUtc.cs</DependentUpon>
+    </Compile>
     <Compile Include="WeeklyScheduleInUtc.cs" />
     <Compile Include="YearlyScheduleInUtc.designer.cs">
       <DependentUpon>YearlyScheduleInUtc.cs</DependentUpon>

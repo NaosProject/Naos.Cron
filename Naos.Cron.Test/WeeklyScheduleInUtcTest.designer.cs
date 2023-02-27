@@ -167,6 +167,7 @@ namespace Naos.Cron.Test
                         A.Dummy<IntervalSchedule>(),
                         A.Dummy<MonthlyScheduleInUtc>(),
                         A.Dummy<NullSchedule>(),
+                        A.Dummy<SpecificDateTimeScheduleInUtc>(),
                         A.Dummy<YearlyScheduleInUtc>(),
                     },
                 });

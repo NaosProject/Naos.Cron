@@ -263,6 +263,10 @@
     <Compile Include="SerializationTests\ScheduleJsonSerializationTests.cs" />
     <Compile Include="ScheduleValidTests.cs" />
     <Compile Include="SerializationTests\SerializationTests.cs" />
+    <Compile Include="SpecificDateTimeScheduleInUtcTest.cs" />
+    <Compile Include="SpecificDateTimeScheduleInUtcTest.designer.cs">
+      <DependentUpon>SpecificDateTimeScheduleInUtcTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="WeeklyScheduleInUtcTest.cs" />
     <Compile Include="WeeklyScheduleInUtcTest.designer.cs">
       <DependentUpon>WeeklyScheduleInUtcTest.cs</DependentUpon>

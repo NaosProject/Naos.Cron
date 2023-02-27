@@ -82,6 +82,7 @@ namespace Naos.Cron.Test
                         typeof(IntervalSchedule),
                         typeof(MonthlyScheduleInUtc),
                         typeof(NullSchedule),
+                        typeof(SpecificDateTimeScheduleInUtc),
                         typeof(WeeklyScheduleInUtc),
                         typeof(YearlyScheduleInUtc)
                     };
@@ -94,6 +95,12 @@ namespace Naos.Cron.Test
 
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SpecificDateTimeScheduleInUtc
+                             {
+                                 SpecificDateTimeInUtc = A.Dummy<DateTime>(),
+                             });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new WeeklyScheduleInUtc

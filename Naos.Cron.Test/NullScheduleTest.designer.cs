@@ -81,6 +81,7 @@ namespace Naos.Cron.Test
                         A.Dummy<HourlySchedule>(),
                         A.Dummy<IntervalSchedule>(),
                         A.Dummy<MonthlyScheduleInUtc>(),
+                        A.Dummy<SpecificDateTimeScheduleInUtc>(),
                         A.Dummy<WeeklyScheduleInUtc>(),
                         A.Dummy<YearlyScheduleInUtc>(),
                     },
