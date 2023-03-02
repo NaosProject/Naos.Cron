@@ -39,6 +39,12 @@ namespace Naos.Cron.Test
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<ScheduleBase>();
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SpecificDateTimeScheduleInUtc
+                      {
+                          SpecificDateTimeInUtc = A.Dummy<UtcDateTime>(),
+                      });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var result = new DailyScheduleInUtc
