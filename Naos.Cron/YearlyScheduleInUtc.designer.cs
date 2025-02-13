@@ -96,6 +96,7 @@ namespace Naos.Cron
         /// </summary>
         /// <param name="monthsOfYear">The new <see cref="MonthsOfYear" />.  This object will NOT be deep cloned; it is used as-is.</param>
         /// <returns>New <see cref="YearlyScheduleInUtc" /> using the specified <paramref name="monthsOfYear" /> for <see cref="MonthsOfYear" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "monthsOfYear")]
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -131,6 +132,7 @@ namespace Naos.Cron
         /// </summary>
         /// <param name="daysOfMonth">The new <see cref="DaysOfMonth" />.  This object will NOT be deep cloned; it is used as-is.</param>
         /// <returns>New <see cref="YearlyScheduleInUtc" /> using the specified <paramref name="daysOfMonth" /> for <see cref="DaysOfMonth" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "daysOfMonth")]
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
