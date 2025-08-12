@@ -81,7 +81,7 @@ namespace Naos.Cron.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new IntervalSchedule()
+                    var result = new IntervalSchedule
                     {
                         Interval = new TimeSpan(A.Dummy<long>().ThatIsInRange(0, 10000))
                     };
@@ -92,15 +92,15 @@ namespace Naos.Cron.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new MonthlyScheduleInUtc()
+                    var result = new MonthlyScheduleInUtc
                     {
                         DaysOfMonth = new[]
                         {
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
                         }.Distinct().ToArray(),
                         Hour = A.Dummy<int>().ThatIsInRange(0, 23),
                         Minute = A.Dummy<int>().ThatIsInRange(0, 59),
@@ -112,7 +112,7 @@ namespace Naos.Cron.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new WeeklyScheduleInUtc()
+                    var result = new WeeklyScheduleInUtc
                     {
                         DaysOfWeek = Some.Dummies<DayOfWeek>(3).ToArray(),
                         Hour = A.Dummy<int>().ThatIsInRange(0, 23),
@@ -125,16 +125,16 @@ namespace Naos.Cron.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new YearlyScheduleInUtc()
+                    var result = new YearlyScheduleInUtc
                     {
                         MonthsOfYear = Some.Dummies<MonthOfYear>(4).ToArray(),
                         DaysOfMonth = new[]
                         {
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
-                            A.Dummy<int>().ThatIsInRange(0, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
+                            A.Dummy<int>().ThatIsInRange(1, 28),
                         }.Distinct().ToArray(),
                         Hour = A.Dummy<int>().ThatIsInRange(0, 23),
                         Minute = A.Dummy<int>().ThatIsInRange(0, 59),
